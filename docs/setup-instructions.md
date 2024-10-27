@@ -35,16 +35,25 @@
 
 ## 3. Set Up MongoDB
 
-1. **Create a `.env`** in `backend`:
-   ```bash
-   touch backend/.env
+1. **Create a `.env`** in the root folder:
+   ```bash   
+   touch .env
    ```
+   Link the file to backend and fontend .env
+   ```bash   
+   ln -s ../.env backend/.env
+   ln -s ../.env fonend/.env
+   ```
+   Now every change you make to the root env 
+   will be copied to the env in the sub folder
+
 
 2. **Add to `.env`**:
    ```
-   MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&appName=dev-cluster1
-   JWT_SECRET=your_jwt_secret
-   PORT=5001
+   REACT_APP_MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&w=majority&appName=dev-cluster1
+   REACT_APP_ADMIN_EMAIL=nguyentienjobs@gmail.com
+   REACT_APP_SENDGRID_API_KEY=your-sendgrid-api-key
+
    ```
 
 3. **What is `JWT_SECRET`?**
