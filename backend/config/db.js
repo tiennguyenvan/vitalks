@@ -1,27 +1,16 @@
-// /backend/config/db.js
-require('dotenv').config(); // Load environment variables
-const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-// Use MongoDB URI from .env
 const uri = process.env.MONGODB_URI;
 
-// Create MongoClient with options
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
 async function connectDB() {
-  try {
-    await client.connect(); // Connect to MongoDB
-    console.log("Connected to MongoDB successfully!");
-  } catch (error) {
-    console.error("MongoDB connection failed:", error);
-    process.exit(1); // Exit if connection fails
-  }
+    try {
+        await mongoose.connect(uri); // No options needed for v4+
+        console.log("Connected to MongoDB successfully!");
+    } catch (error) {
+        console.error("MongoDB connection failed:", error);
+        process.exit(1);
+    }
 }
 
-module.exports = { client, connectDB };
+module.exports = { connectDB };

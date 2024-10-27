@@ -5,7 +5,11 @@
    - [Download Node.js](https://nodejs.org)  
 2. **Git** installed  
    - [Download Git](https://git-scm.com/)  
-3. **MongoDB Atlas** (recommended) or local MongoDB setup
+3. **MongoDB Atlas** (recommended) or local MongoDB setup  
+   - If local, ensure **MongoDB Community Server** is running:
+     ```bash
+     brew services start mongodb/brew/mongodb-community
+     ```
 
 ## 1. Clone the Repository
 1. Open **GitHub Desktop** > **File > Clone Repository**.
@@ -38,7 +42,7 @@
 
 2. **Add to `.env`**:
    ```
-   MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&w=majority&appName=dev-cluster1
+   MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&appName=dev-cluster1
    JWT_SECRET=your_jwt_secret
    PORT=5001
    ```
@@ -55,8 +59,33 @@
 
    Use the generated string as the `JWT_SECRET` in your `.env` file.
 
+## 4. Update MongoDB Connection Logic in `db.js`
+1. Ensure **Mongoose** is used to connect to MongoDB. Update `backend/config/db.js`:
+   ```javascript
+   require('dotenv').config();
+   const mongoose = require('mongoose');
 
-## 4. Run the Backend Server
+   const uri = process.env.MONGODB_URI;
+
+   async function connectDB() {
+       try {
+           await mongoose.connect(uri); // No extra options needed for v4+
+           console.log("Connected to MongoDB successfully!");
+       } catch (error) {
+           console.error("MongoDB connection failed:", error);
+           process.exit(1);
+       }
+   }
+
+   module.exports = { connectDB };
+   ```
+
+2. **Restart the Backend Server** after making changes:
+   ```bash
+   node server.js
+   ```
+
+## 5. Run the Backend Server
 1. Inside **backend** folder:
    ```bash
    cd backend
@@ -69,7 +98,7 @@
    Server is running on http://localhost:5001
    ```
 
-## 5. Run the Frontend (React)
+## 6. Run the Frontend (React)
 1. Inside **frontend** folder:
    ```bash
    cd frontend
@@ -81,7 +110,7 @@
    http://localhost:3000
    ```
 
-## 6. Test the Setup
+## 7. Test the Setup
 1. Open browser/Postman and visit:
    ```
    http://localhost:5001/
@@ -92,7 +121,31 @@
    Welcome to the VITALKS API!
    ```
 
-## 7. Troubleshooting
+3. **Test User Creation:**
+   - Send a **POST request** to:
+     ```
+     POST http://localhost:5001/test-create-user
+     ```
+   - **Body (JSON)**:
+     ```json
+     {
+         "username": "test_user",
+         "email": "test@example.com",
+         "profilePicture": "http://example.com/profile.jpg",
+         "bio": "Hello world!"
+     }
+     ```
+   - On success, you should get:
+     ```json
+     {
+         "_id": "some_object_id",
+         "username": "test_user",
+         "email": "test@example.com",
+         ...
+     }
+     ```
+
+## 8. Troubleshooting
 - **Port Already in Use Error**: Use a different port in `.env`:
   ```
   PORT=5002
@@ -107,7 +160,7 @@
   npm install
   ```
 
-## 8. Git Workflow (GitHub Desktop)
+## 9. Git Workflow (GitHub Desktop)
 1. **Create a New Branch**:  
    - **Branch > New Branch** in GitHub Desktop.  
    - Name it (e.g., `feature/login`).
@@ -121,7 +174,7 @@
 4. **Create a Pull Request**:
    - Open a **pull request** on GitHub.
 
-## 9. Team Contact Points
+## 10. Team Contact Points
 - **Tim Nguyen**: Lead, Full-stack, Database  
 - **Diego II Pinlac**: Full-stack, UI/UX  
 - **Yaolong Liu**: Frontend, Testing, Documentation
