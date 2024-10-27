@@ -1,12 +1,13 @@
 const sgMail = require('@sendgrid/mail');
+const Env = require('./env');
 require('dotenv').config();
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(Env.SENDGRID_API_KEY);
 
 async function sendValidationEmail(to, code) {
     const msg = {
         to,
-        from: 'your-email@example.com', // Use a verified sender email
+        from: Env.SENDGRID_FROM_EMAIL, // Use a verified sender email
         subject: 'Your ViTalks Validation Code',
         text: `Your validation code is: ${code}`,
         html: `<strong>Your validation code is: ${code}</strong>`,
