@@ -50,9 +50,10 @@
 
 2. **Add to `.env`**:
    ```
-   REACT_APP_MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&w=majority&appName=dev-cluster1
-   REACT_APP_ADMIN_EMAIL=nguyentienjobs@gmail.com
-   REACT_APP_SENDGRID_API_KEY=your-sendgrid-api-key
+REACT_APP_MONGODB_URI=mongodb+srv://nguyentienjobs:WbY0FmeRbSEuwF6x@dev-cluster1.99snl.mongodb.net/?retryWrites=true&w=majority&appName=dev-cluster1
+REACT_APP_ADMIN_EMAIL=nguyentienjobs@gmail.com
+REACT_APP_SENDGRID_API_KEY=????
+REACT_APP_SENDGRID_FROM_EMAIL=contact@sneeit.com
 
    ```
 
