@@ -2,7 +2,7 @@ const crypto = require('crypto');
 
 // let Diego refines this function to generate a more secure validation code
 function generateValidationCode() {
-	// return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit code at this tim
+	// return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit code at this time
 	return '123456'; // For simplicity, using a hardcoded code for demonstration purposes
 }
 
