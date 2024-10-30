@@ -12,4 +12,5 @@ connectDB();
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log(`SendGrid From Email: ${Env.SENDGRID_FROM_EMAIL}`);
+	console.log(`Skip sending emails: ${Env.SKIP_SENDING_EMAIL}`);
 });

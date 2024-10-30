@@ -3,12 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 
 var app = express();
+// Allow all origins
+app.use(cors());
+// app.use(cors({
+//     origin: 'http://localhost:3000', // Allow requests from this frontend only
+//     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'UPDATE'], // Specify allowed methods
+//     credentials: true, // Allow cookies to be sent if needed
+// }));
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

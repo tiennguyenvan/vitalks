@@ -2,10 +2,8 @@
 
 :root {
     --yellow: #FFFF00;
-
     --primary-btn: #1E1E1E;
     --primary-btn-hover: #414141;
-
     --input-border: #ccc;
 }
 
@@ -19,7 +17,7 @@ span.yellow {
 
 .hero {
     position: relative;
-    background-image: url('../../../../assets/images/login-banner-image.png');
+    background-image: url('../../assets/images/login-banner-image.png');
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -61,7 +59,7 @@ span.yellow {
     padding: 20px;
     position: relative;
 
-    background-image: url('../../../../assets/images/vector-circle-black.png');
+    background-image: url('../../assets/images/vector-circle-black.png');
     background-position: 120% 125%;
     background-repeat: no-repeat;
     background-size: 300px;

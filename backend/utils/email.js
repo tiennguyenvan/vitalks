@@ -5,8 +5,10 @@ require('dotenv').config();
 sgMail.setApiKey(Env.SENDGRID_API_KEY);
 
 async function sendValidationEmail(to, code) {
-	if (Env.SKIP_SENDING_EMAIL) {
-		console.log('Skipping sending email for demonstration purposes');
+	// console.log(`sendValidationEmail: Skip sending emails: ${Env.SKIP_SENDING_EMAIL}`);
+	console.log(`sendValidationEmail: Your validation code is: ${code}`);
+	if (Env.SKIP_SENDING_EMAIL === true) {		
+		// console.log(`sendValidationEmail: Still skipping email`);
         return; // Return early if skipping sending emails for demonstration purposes
 	}
     const msg = {

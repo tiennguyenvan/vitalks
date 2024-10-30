@@ -1,12 +1,12 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import LoginPage from './components/views/Login/LoginPage/LoginPage';
+import LoginPage from './pages/login/LoginPage';
 
 function App() {
-  return (
-    <div className="App">
-      {/* <header className="App-header">
+	return (
+		<div className="App">
+			{/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -21,9 +21,9 @@ function App() {
         </a>
       </header> */}
 
-      <LoginPage />
-    </div>
-  );
+			<LoginPage />
+		</div>
+	);
 }
 
 export default App;

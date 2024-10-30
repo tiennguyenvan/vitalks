@@ -19,8 +19,9 @@ router.post('/request-code', async (req, res) => {
     saveValidationCode(email, code);
 
     try {
-        await sendValidationEmail(email, 'Your Validation Code', `Your code is: ${code}`);
+        await sendValidationEmail(email, code);
         res.status(200).json({ message: 'Validation code sent successfully.' });
+		console.log(`Sent validation code : ${code}`);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to send validation code.' });
