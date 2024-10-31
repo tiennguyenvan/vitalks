@@ -28,7 +28,6 @@ const HomePage = () => {
                                     </div>
                                 </div>
                             </aside>
-                            test
                             <SideBarItem title={"Resources"} url={"/"} />
                         </div>
                         <div className="col-md-6">
