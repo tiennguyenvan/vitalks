@@ -1,14 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Inter:400;700');
-
-:root {
-    --yellow: #FFFF00;
-    --primary-btn: #1E1E1E;
-    --primary-btn-hover: #414141;
-    --input-border: #ccc;
-}
-
-body {
-    font-family: "Inter";
+.page-login {
+    background-color: #fff;
 }
 
 span.yellow {
@@ -137,6 +128,13 @@ span.yellow {
 
 .form__button--secondary:hover {
     background-color: #e9e9e9;
+}
+
+.form__error {
+    margin: 20px 0 0;
+    color: #ff152b;
+    text-align: center;
+    font-weight: 400;
 }
 
 .social-logo {

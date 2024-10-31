@@ -111,7 +111,7 @@ const LoginForm = ({ title }) => {
                     </>
                 )}
 
-                {errorMessage && <p className="error">{errorMessage}</p>}
+                {errorMessage && <p className="form__error">{errorMessage}</p>}
 
                 <span className="form__text">Or</span>
 
