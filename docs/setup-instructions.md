@@ -42,7 +42,7 @@
    Link the file to backend and fontend .env
    ```bash   
    ln -s ../.env backend/.env
-   ln -s ../.env fonend/.env
+   ln -s ../.env frontend/.env
    ```
    Now every change you make to the root env 
    will be copied to the env in the sub folder

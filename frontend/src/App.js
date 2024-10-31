@@ -2,6 +2,7 @@
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import LoginPage from './pages/login/LoginPage';
+import HomePage from './pages/home/HomePage';
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
       </header> */}
 
 			<LoginPage />
+      {/* <HomePage /> */}
 		</div>
 	);
 }

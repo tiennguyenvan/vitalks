@@ -12,11 +12,11 @@ var testRouter = require('./routes/test');
 var app = express();
 // Allow all origins
 app.use(cors());
-// app.use(cors({
-//     origin: 'http://localhost:3000', // Allow requests from this frontend only
-//     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'UPDATE'], // Specify allowed methods
-//     credentials: true, // Allow cookies to be sent if needed
-// }));
+app.use(cors({
+    origin: 'http://localhost:3000', // Allow requests from this frontend only
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'UPDATE'], // Specify allowed methods
+    credentials: true, // Allow cookies to be sent if needed
+}));
 
 
 
