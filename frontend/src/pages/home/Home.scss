@@ -124,7 +124,7 @@
     border-radius: 8px;
     resize: none;
     overflow: hidden;
-    transition: border- color 0.3s;
+    transition: border-color 0.3s;
 }
 
 .feed__input-box:focus {
@@ -141,6 +141,7 @@
 
 .feed__input-anonymous {
     color: #555;
+    flex: 1;
 }
 
 .feed__input-checkbox {
@@ -150,8 +151,20 @@
 .feed__input-privacy {
     padding: 6px 8px;
     border-radius: 4px;
-    border: 1px solid var(--input-border);
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
 }
+
+.feed__input-privacy:focus-visible {
+    outline: none;
+}
+
+.feed__input-button {
+    margin-left: 10px;
+}
+
 
 
 /* Post Styles */
@@ -226,20 +239,30 @@
 .post__reaction {
     color: #555;
     cursor: pointer;
+    transition: color 0.3s;
 }
 
 .post__reaction svg {
     font-size: 18px;
 }
 
-.post__reaction__like--active {
+.post__reaction__like--active,
+.post__reaction__like:hover,
+.post__reaction__like:active,
+.post__reaction__like:focus {
     color: #e92265;
 }
 
-.post__reaction__comment--active {
+.post__reaction__comment--active,
+.post__reaction__comment:hover,
+.post__reaction__comment:active,
+.post__reaction__comment:focus {
     color: #ffbf0a;
 }
 
-.post__reaction__share--active {
+.post__reaction__share--active,
+.post__reaction__share:hover,
+.post__reaction__share:active,
+.post__reaction__share:focus {
     color: #6638c1;
 }

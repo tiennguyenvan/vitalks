@@ -21,9 +21,9 @@ const Posts = ({ posts, thumbnail }) => {
                         <img src="https://picsum.photos/600/400" alt="Image" className="post__image" />
                     </div>
                     <div className="post__reactions">
-                        <span className="post__reaction post__reaction__like--active"><FaHeart /> 24k</span>
-                        <span className="post__reaction post__reaction__comment--active"><FaComment /> 500</span>
-                        <span className="post__reaction post__reaction__share--active"><FaShareNodes /> 48</span>
+                        <span className="post__reaction post__reaction__like"><FaHeart /> 24k</span>
+                        <span className="post__reaction post__reaction__comment"><FaComment /> 500</span>
+                        <span className="post__reaction post__reaction__share"><FaShareNodes /> 48</span>
                     </div>
                 </div>
             ))}

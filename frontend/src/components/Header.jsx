@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
-import logo from '../assets/images/vitalks-logo.png';
 import userPhoto from '../assets/images/profile-user-photo-1.png';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa6";
+import SiteLogo from './SiteLogo';
 
 const Header = () => {
+    const [inSearch, setSearchValue] = useState('');
+    const handleSearchChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevents page refresh
+        console.log('Input Value:', inSearch); // Logs the input value to console
+    };
+
     return ( <>
         <div className="navbar">
             <nav className="container">
                 <div className="navbar__left">
-                    <img className="navbar__logo" alt='Site Logo' src={logo} />
-                    <div className="navbar__search-container">
+                    <SiteLogo />
+                    <form className="navbar__search-container" onSubmit={handleSubmit}>
                         <span className="navbar__search-icon"><FaMagnifyingGlass /></span>
-                        <input type="text" placeholder="Type to Search" className="navbar__search-input" />
-                    </div>
+                        <input type="text" placeholder="Type to Search" className="navbar__search-input" value={inSearch} onChange={handleSearchChange} />
+                    </form>
                 </div>
 
                 <div className="navbar__right">

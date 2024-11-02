@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SideBarItem = ({ title, url }) => {
-    console.log(title)
     return ( <>
         <aside className="sidebar">
             <div className="sidebar__head">

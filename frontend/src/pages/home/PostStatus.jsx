@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import userPhoto from '../../assets/images/profile-user-photo-1.png';
 
 const PostStatus = () => {
+    const options = [
+        { value: 'public', label: 'Public'},
+        { value: 'friends', label: 'Friends'},
+        { value: 'private', label: 'Private'},
+    ];
+
     return ( <>
         <div className="feed__input">
             <img src={userPhoto} alt="User Avatar" className="feed__input-avatar" />
@@ -13,10 +19,15 @@ const PostStatus = () => {
                         Share anonymously
                     </label>
                     <select className="feed__input-privacy">
-                        <option value="public">🌐 Public</option>
-                        <option value="friends">👫 Friends</option>
-                        <option value="private">🔒 Private</option>
+                        {options.map(option => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
                     </select>
+                    <button className="feed__input-button form__button form__button--primary">
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
