@@ -3,13 +3,16 @@
 }
 
 .page-underconstructionpage {
-    
     background-image: linear-gradient(to bottom left, #000, #666);
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
 }
 
 .construction__bgWhite {
     background-image: url('../../assets/images/vector-construction-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     bottom: 0;
     right: 0;
