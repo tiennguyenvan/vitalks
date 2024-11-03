@@ -142,10 +142,7 @@ span.yellow {
     margin-right: 5px;
 }
 
-@media only screen and (min-width: 1201px) {
-    
-}
-
+/* Responsiveness */
 @media only screen and (max-width: 1200px) {
     
 }
@@ -154,7 +151,12 @@ span.yellow {
     
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
+    .row {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+    }
+
     .hero {
         height: 25vh;
     }
@@ -191,4 +193,3 @@ span.yellow {
 @media only screen and (max-width: 480px) {
 
 }
-  

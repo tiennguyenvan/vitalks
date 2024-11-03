@@ -12,7 +12,7 @@ const HomePage = () => {
             <div className="container">
                 <div className="main">
                     <div className="row">
-                        <div className="col-md-3">                    
+                        <div className="row__profile col-md-3 col-sm-12">                    
                             <aside className="sidebar">
                                 <div className="profile">
                                     <img className="profile__background" src="https://placehold.co/200x100?text=Cover+Photo" alt="Background" />
@@ -30,10 +30,10 @@ const HomePage = () => {
                             </aside>
                             <SideBarItem title={"Resources"} url={"/"} />
                         </div>
-                        <div className="col-md-6">
+                        <div className="row__feed col-md-6 col-sm-12">
                             <Feed />
                         </div>
-                        <div className="col-md-3">
+                        <div className="row__sidebar col-md-3 col-sm-12">
                             <SideBarItem title={"Activity"} url={"/"} />
                         </div>
                     </div>

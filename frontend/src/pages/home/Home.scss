@@ -165,8 +165,6 @@
     margin-left: 10px;
 }
 
-
-
 /* Post Styles */
 .post {
     background-color: #fff;
@@ -265,4 +263,47 @@
 .post__reaction__share:active,
 .post__reaction__share:focus {
     color: #6638c1;
+}
+
+/* Responsiveness */
+@media only screen and (max-width: 1366px) {
+    
+}
+
+@media only screen and (max-width: 1200px) {
+    
+}
+
+@media only screen and (max-width: 1024px) {
+    .row__profile {
+        width: 30%;
+    }
+    .profile__stats {
+        display: none;
+    }
+    .row__feed {
+        width: 70%;
+    }
+    .row__sidebar {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .row__profile {
+        display: none;
+    }
+    .row__feed {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .feed__input-avatar {
+        display: none
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
 }
