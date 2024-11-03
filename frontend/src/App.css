@@ -17,6 +17,7 @@
 body {
     font-family: "Inter", sans-serif;
 	background-color: var(--main-background);
+    overflow-x: hidden;
 }
 
 h1 {
@@ -60,10 +61,14 @@ p {
     margin-top: 0.5em; /* Adjust as needed */
 }
 
-
 /* Main */
 .main {
 	margin: 20px 0;
+}
+
+.row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
 }
 
 /* Header */

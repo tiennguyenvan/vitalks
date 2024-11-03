@@ -142,28 +142,53 @@ span.yellow {
     margin-right: 5px;
 }
 
-/* Extra Small Devices (Portrait Phones) */
-@media only screen and (max-width: 480px) {
-    /* Styles for mobile screens */
-}
-
-/* Small Devices (Tablets) */
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-    /* Styles for tablets */
-}
-
-/* Medium Devices (Small Desktops) */
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-    /* Styles for small desktops */
-}
-
-/* Large Devices (Desktops) */
-@media only screen and (min-width: 1025px) and (max-width: 1200px) {
-    /* Styles for large desktops */
-}
-
-/* Extra Large Devices (Wide Screens) */
 @media only screen and (min-width: 1201px) {
-    /* Styles for extra large screens */
+    
+}
+
+@media only screen and (max-width: 1200px) {
+    
+}
+
+@media only screen and (max-width: 1024px) {
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .hero {
+        height: 25vh;
+    }
+
+    .hero__body {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .hero .divider {
+        display: none;
+    }
+
+    .page-login .logo {
+        top: 35px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .page-logint .breakline {
+        display: none;
+    }
+
+    /* Form */
+    .form {
+        height: calc(100vh - 25vh);
+    }
+
+    .form__element {
+        width: 80vw;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
 }
   
