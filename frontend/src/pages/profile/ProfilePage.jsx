@@ -5,6 +5,7 @@ import './ProfilePage.scss'
 import profileUser from '../../assets/images/profile-user-photo-1.png';
 
 const ProfilePage = () => {
+	
     return (
         <div className="page page-profile">
             <Header />

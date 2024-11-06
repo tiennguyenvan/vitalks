@@ -4,7 +4,15 @@ const { sendValidationEmail } = require('../utils/email');
 const { generateValidationCode, saveValidationCode } = require('../services/validation');
 const User = require('../models/User');
 
-// Test route to create a user
+router.delete('/delete-all-users', async (req, res) => {
+    try {
+        const result = await User.deleteMany({}); // Delete all documents in the `users` collection
+        res.status(200).json({ message: 'All users deleted successfully.', deletedCount: result.deletedCount });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete all users.', error: error.message });
+    }
+});
+
 router.post('/create-user', async (req, res) => {
     try {
         const user = await User.create(req.body);
