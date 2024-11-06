@@ -44,7 +44,7 @@ const LoginForm = ({ title }) => {
                 localStorage.setItem('email', email);
                 localStorage.setItem('code', validationCode);
                 // Redirect to profile or another page
-                window.location.href = '/profile';
+                window.location.href = `/profile/${response.data.user._id}`;
             } else {
                 setErrorMessage(response.data.message || 'Invalid validation code. Please try again.');
             }

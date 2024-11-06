@@ -16,9 +16,8 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/community" element={<CommunityPage />} />
                     <Route path="/messaging" element={<MessagingPage />} />
-                    <Route path="/notification" element={<NotificationPage />} />
-                    
-                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/notification" element={<NotificationPage />} />                    
+                    <Route path="/profile/:id" element={<ProfilePage />} />
                     {/* Add more routes here as needed 
 					ex: <Route path="/" element={<HomePage />} />
 					ex: <Route path="/profile" element={<ProfilePage />} />
