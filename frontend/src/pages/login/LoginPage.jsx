@@ -4,7 +4,7 @@ import './Login.scss';
 import LoginForm from './LoginForm';
 import SiteLogo from '../../components/SiteLogo';
 
-const LoginPage = () => {
+const LoginPage = () => {	
 	return (<>
 		<div className="page page-login">
 			<div className="row">
