@@ -103,44 +103,44 @@ const ProfilePage = () => {
 					<div className="star">
 						<img id="profileStarBG" src={profileBG} alt="Background" />
 
-						<div className="starinfo">
-							<div className="avatar">
-								<img
-									src={profileUser}
-									alt="Avatar"
-									style={{ height: 100, width: 100 }}
-								/>
-							</div>
+						<div className="row">
+							<div className="starinfo">
+								<div className="avatar">
+									<img
+										src={profileUser}
+										alt="Avatar"
+										style={{ height: 100, width: 100 }}
+									/>
+								</div>
 
-							<div className="details">
-								<h2 id="userName">John Doe</h2>
-								<div className="star_stats">
-									<div className="star_stat">
-										<strong>{profileUserInfo.thoughtsCount}</strong> Thoughts
-									</div>
-									<div className="star_stat">
-										<strong>{profileUserInfo.listenersCount}</strong> Listeners
-										{currentUser && currentUser._id && currentUser._id !== profileUserId && <>
-											<button className="btn follow-btn" onClick={handleFollowToggle}>
-												{isFollowing ? "Unfollow" : "Follow"}
-											</button>
-										</>}
-
-									</div>
-									<div className="star_stat">
-										<strong>{profileUserInfo.followingsCount}</strong> Following
+								<div className="details">
+									<h2 id="userName">John Doe</h2>
+									<div className="star_stats">
+										<div className="star_stat">
+											<strong>{profileUserInfo.thoughtsCount}</strong> Thoughts
+										</div>
+										<div className="star_stat">
+											<strong>{profileUserInfo.listenersCount}</strong> Listeners
+										</div>
+										<div className="star_stat">
+											<strong>{profileUserInfo.followingsCount}</strong> Following
+										</div>
+										<div className="star_stat">
+											{currentUser && currentUser._id && currentUser._id !== profileUserId && <>
+												<div className="profilefollow-btn">
+													<button className="btn follow-btn profile__button--primary" onClick={handleFollowToggle}>
+														{isFollowing ? "Unfollow" : "Follow"}
+													</button>
+												</div>
+											</>}
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					
 					</div>
-					<div className="star_gap">
-						<br />
-						<br />
-						<br />
-						<br />
-					</div>
-
+					
 					<div className="row">
 						<div className="row__sidebar col-md-4 col-sm-12">
 							<SideBarItem title={"About"} url={"/"} />
