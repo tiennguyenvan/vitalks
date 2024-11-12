@@ -1,0 +1,50 @@
+.star {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  position: relative;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#profileStarBG {
+  max-width: 80%;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.profile-info {
+  position: relative;
+  top: -50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+.profile-info .avatar {
+  display: flex;
+}
+.profile-info .details {
+  text-align: center;
+}
+.profile-info .details .stats {
+  display: flex;
+  justify-content: center;
+}
+.profile-info .details .stats .stat {
+  text-align: center;
+}
+.profile-info .details .stats .stat p {
+  font-size: 17px;
+  font-weight: bold;
+}
+.profile-info .details .stats .stat span {
+  font-size: 15px;
+}/*# sourceMappingURL=ProfilePage.css.map */

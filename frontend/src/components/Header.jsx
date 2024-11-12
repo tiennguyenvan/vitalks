@@ -48,18 +48,6 @@ const Header = () => {
                                     <span className="nav__icon"><FaHouse /></span>
                                     <span className="nav__label">Home</span>
                                 </a>
-                                <a href="/community" className="navbar__link">
-                                    <span className="nav__icon"><FaPeopleGroup /></span>
-                                    <span className="nav__label">Community</span>
-                                </a>
-                                <a href="/messaging" className="navbar__link">
-                                    <span className="nav__icon"><FaMessage /></span>
-                                    <span className="nav__label">Messaging</span>
-                                </a>
-                                <a href="/notification" className="navbar__link">
-                                    <span className="nav__icon"><FaBell /></span>
-                                    <span className="nav__label">Notifications</span>
-                                </a>
                                 <div className="navbar__profile">
                                     <div className="navbar__profile-info">
                                         <span className="navbar__profile-chevron"><FaAngleDown /></span>
