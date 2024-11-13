@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const { authenticateUser } = require('../utils/validation');
+const User = require('../models/User');
+const upload = require('../utils/upload'); // Import the upload utility
+
 
 ////////////////////////////////////////////////////////////////////////
 // CREATE A NEW POST
@@ -11,20 +14,35 @@ const { authenticateUser } = require('../utils/validation');
  * Creates a new post
  * 
  * Request Attributes:
- * - author (ObjectId): ID of the post's author (User)
  * - content (String): Text content of the post
  * - imageURL (String, optional): URL of an image associated with the post
  * - categoryId (ObjectId): ID of the category to which the post belongs
- * 
+ * 	
  * Response:
  * - message (String): Confirmation message
  * - post (Object): Created post data
  */
-router.post('/', authenticateUser, async (req, res) => {
-    const { author, content, imageURL, categoryId } = req.body;
 
+router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
+    const { content, categoryId } = req.body;
+    const email = req.body.email;
+	
+	
     try {
-        const post = new Post({ author, content, imageURL, categoryId });
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const imageURL = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const post = new Post({
+            author: user._id,
+            content,
+            imageURL,
+            categoryId
+        });
+
         await post.save();
         res.status(201).json({ message: 'Post created successfully', post });
     } catch (error) {
@@ -32,6 +50,7 @@ router.post('/', authenticateUser, async (req, res) => {
         res.status(500).json({ message: 'Failed to create post', error: error.message });
     }
 });
+
 
 ////////////////////////////////////////////////////////////////////////
 // GET ALL POSTS

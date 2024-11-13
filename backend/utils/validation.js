@@ -76,5 +76,6 @@ module.exports = {
 	saveValidationCode,
 	getValidationCode,
 	activeSessions,
-	authenticateUser
+	authenticateUser,
+	activateUser
 };
