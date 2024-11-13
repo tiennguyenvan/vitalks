@@ -1,20 +1,16 @@
 // /backend/server.js
-const express = require('express');
+const app = require('./app'); // Import the Express app from app.js
 const { connectDB } = require('./config/db'); // Import MongoDB connection
+const Env = require('./utils/env'); // Load environment variables
 
-const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = Env.BACKEND_PORT || 5001; // Set default port if not provided
 
-connectDB(); // Connect to MongoDB when the server starts
+// Connect to MongoDB
+connectDB();
 
-// Middleware to parse JSON requests
-app.use(express.json());
-
-// Root route handler
-app.get('/', (req, res) => {
-  res.send('Welcome to the VITALKS API!');
-});
-
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`SendGrid From Email: ${Env.SENDGRID_FROM_EMAIL}`);
+	console.log(`Skip sending emails: ${Env.SKIP_SENDING_EMAIL}`);
 });
