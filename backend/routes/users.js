@@ -6,207 +6,228 @@ const { sendValidationEmail } = require('../utils/email');
 const { generateValidationCode, saveValidationCode, getValidationCode } = require('../services/validation');
 
 const activeSessions = new Map(); // Store sessions in memory
+const authenticateUser = async (req, res, next) => {
+	next();
+	return;
+	const { email, code } = req.body;
 
+	// Check if email and code are provided
+	if (!email || !code) {
+		return res.status(400).json({ message: 'Email and code are required.' });
+	}
+
+	// Validate session
+	const sessionCode = activeSessions.get(email);
+	if (!sessionCode || sessionCode !== code) {
+		return res.status(401).json({ message: 'Session expired. Please login again.' });
+	}
+
+	// Retrieve user
+	const user = await User.findOne({ email });
+	if (!user) {
+		return res.status(404).json({ message: 'User not found.' });
+	}
+
+	// Attach user ID to request
+	req.userId = user._id;
+	next();
+};
+
+////////////////////////////////////////////////////////////////////////
+// LOGIN PART
+////////////////////////////////////////////////////////////////////////
 // Request a validation code for email login
 router.post('/request-code', async (req, res) => {
-    const { email } = req.body;
+	const { email } = req.body;
 
-    if (!email) {
-        return res.status(400).json({ message: 'Email is required.' });
-    }
+	if (!email) {
+		return res.status(400).json({ message: 'Email is required.' });
+	}
 
-    const code = generateValidationCode();
-    saveValidationCode(email, code);
+	const code = generateValidationCode();
+	saveValidationCode(email, code);
 
-    try {
-        await sendValidationEmail(email, code);
-        res.status(200).json({ message: 'Validation code sent successfully.' });
-		console.log(`Sent validation code : ${code}`);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to send validation code.' });
-    }
+	try {
+		await sendValidationEmail(email, code);
+		res.status(200).json({ message: 'Validation code sent successfully.' });
+		// console.log(`Sent validation code : ${code}`);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Failed to send validation code.' });
+	}
 });
 
 // Verify the code and create the user if not exists
 router.post('/verify-code', async (req, res) => {
-    const { email, code } = req.body;
+	const { email, code } = req.body;
 
-    if (!email || !code) {
-        return res.status(400).json({ message: 'Email and code are required.' });
-    }
+	if (!email || !code) {
+		return res.status(400).json({ message: 'Email and code are required.' });
+	}
 
-    const storedCode = getValidationCode(email);
+	const storedCode = getValidationCode(email);
 
-    if (storedCode && storedCode === code) {
-        activeSessions.set(email, code);
+	if (storedCode && storedCode === code) {
+		activeSessions.set(email, code);
 
-        let user = await User.findOne({ email });
-        if (!user) {
-            user = new User({ email });
-            await user.save();
+		let user = await User.findOne({ email });
+		if (!user) {
+			user = new User({ email });
+			await user.save();
+		}
+
+		// console.log(user);
+
+		return res.status(200).json({ message: 'Login successful.', user });
+	} else {
+		return res.status(401).json({ message: 'Invalid validation code.' });
+	}
+});
+
+
+////////////////////////////////////////////////////////////////////////
+// GET USER DATA
+////////////////////////////////////////////////////////////////////////
+router.post('/get-user/:id?', authenticateUser, async (req, res) => {
+	const { id } = req.params; // optional
+	const { email } = req.body; //used if id is missing
+
+	try {
+		let user;
+		if (id) { user = await User.findById(id); }
+		else if (email) { user = await User.findOne({ email }); }
+		if (!user) {
+			return res.status(404).json({ message: 'User not found.' });
+		}
+		return res.status(200).json(user);
+	} catch (error) {
+		console.error("Error fetching user data:", error);
+		return res.status(500).json({ message: 'Failed to retrieve user data.', error: error.message });
+	}
+});
+router.post('/is-following/:id', authenticateUser, async (req, res) => {
+    const { id } = req.params; // ID of the user being checked
+    const { email } = req.body; // Email of the current logged-in user
+
+    try {        
+        const currentUser = await User.findOne({ email });
+        const userToFollow = await User.findById(id);
+        
+        if (!currentUser || !userToFollow) {
+            return res.status(404).json({ message: 'Users not found.' });
         }
-
-        return res.status(200).json({ message: 'Login successful.', user });
-    } else {
-        return res.status(401).json({ message: 'Invalid validation code.' });
+        
+        const following = await Following.findOne({ followed: userToFollow._id, by: currentUser._id });
+        
+        return res.status(200).json({ following: !!following });
+    } catch (error) {
+        console.error("Error checking following status:", error);
+        return res.status(500).json({ message: 'Failed to check following status.', error: error.message });
     }
 });
 
-// Get user data with optional fields filtering
-router.get('/get-data', async (req, res) => {
-    const { email, code, fields } = req.query;
 
-    const sessionCode = activeSessions.get(email);
-    if (!sessionCode || sessionCode !== code) {
-        return res.status(401).json({ message: 'Session expired. Please login again.' });
-    }
 
-    const user = await User.findOne({ email });
-    if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-    }
-
-    if (!fields) {
-        return res.status(200).json(user);
-    }
-
-    const responseData = {};
-    fields.split(',').forEach(field => {
-        switch (field.trim().toLowerCase()) {
-            case 'userid':
-                responseData.userID = user._id;
-                break;
-            case 'email':
-                responseData.email = user.email;
-                break;
-            case 'profilepicture':
-                responseData.profilePicture = user.profilePicture;
-                break;
-            case 'bio':
-                responseData.bio = user.bio;
-                break;
-            case 'thoughtscount':
-                responseData.thoughtsCount = user.thoughtsCount;
-                break;
-            case 'listenerscount':
-                responseData.listenersCount = user.listenersCount;
-                break;
-            case 'followingscount':
-                responseData.followingsCount = user.followingsCount;
-                break;
-            case 'createdat':
-                responseData.createdAt = user.createdAt;
-                break;
-            case 'updatedat':
-                responseData.updatedAt = user.updatedAt;
-                break;
-            default:
-                responseData[field] = 'Field not found';
-        }
-    });
-
-    return res.status(200).json(responseData);
-});
-
+////////////////////////////////////////////////////////////////////////
+// UPDATE USER DATA
+////////////////////////////////////////////////////////////////////////
 // Update user profile
-router.patch('/update', async (req, res) => {
-    const { email, code } = req.query;
-    const userUpdates = req.body;
+router.patch('/update', authenticateUser, async (req, res) => {
+	const { email, code } = req.query;
+	const userUpdates = req.body;
 
-    const sessionCode = activeSessions.get(email);
-    if (!sessionCode || sessionCode !== code) {
-        return res.status(401).json({ message: 'Session expired. Please login again.' });
-    }
+	const sessionCode = activeSessions.get(email);
+	if (!sessionCode || sessionCode !== code) {
+		return res.status(401).json({ message: 'Session expired. Please login again.' });
+	}
 
-    const user = await User.findOne({ email });
-    if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-    }
+	const user = await User.findOne({ email });
+	if (!user) {
+		return res.status(404).json({ message: 'User not found.' });
+	}
 
-    if (userUpdates.profilePicture) user.profilePicture = userUpdates.profilePicture;
-    if (userUpdates.bio) user.bio = userUpdates.bio;
-    if (userUpdates.thoughtsCount !== undefined) user.thoughtsCount = userUpdates.thoughtsCount;
+	if (userUpdates.profilePicture) user.profilePicture = userUpdates.profilePicture;
+	if (userUpdates.bio) user.bio = userUpdates.bio;
+	if (userUpdates.thoughtsCount !== undefined) user.thoughtsCount = userUpdates.thoughtsCount;
 
-    await user.save();
-    res.status(200).json({ message: 'User profile updated successfully.' });
+	await user.save();
+	res.status(200).json({ message: 'User profile updated successfully.' });
 });
 
-// Follow a user
-router.post('/follow', async (req, res) => {
-    const { by, followed } = req.body;
+router.post('/follow', authenticateUser, async (req, res) => {
+	const { email, followedId } = req.body; // `email` is the current user's email, `followed` is the email of the user to follow
 
-    try {
-        if (by === followed) {
-            return res.status(400).json({ message: 'You cannot follow yourself.' });
-        }
+	try {
+		// Retrieve the current user's ID using their email
+		const currentUser = await User.findOne({ email });
+		if (!currentUser) {
+			return res.status(404).json({ message: 'Current user not found.' });
+		}
+		const currentId = currentUser._id;
 
-        const follow = new Following({ by, followed });
-        await follow.save();
+		// Retrieve the ID of the user to follow using their email
+		const userToFollow = await User.findById(followedId);
+		if (!userToFollow) {
+			return res.status(404).json({ message: 'User to follow not found.' });
+		}		
 
-        // Update follow counts
-        await User.findByIdAndUpdate(by, { $inc: { followingsCount: 1 } });
-        await User.findByIdAndUpdate(followed, { $inc: { listenersCount: 1 } });
+		if (String(currentId) === String(followedId)) {
+			return res.status(400).json({ message: 'You cannot follow yourself.' });
+		}
 
-        res.status(200).json({ message: 'Followed successfully.' });
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.status(400).json({ message: 'You are already following this user.' });
-        }
-        res.status(500).json({ message: 'Failed to follow user.', error: error.message });
-    }
+		// Create the follow relationship
+		const follow = new Following({ followed: followedId, by: currentId });
+		await follow.save();
+
+		// Update follow counts
+		await User.findByIdAndUpdate(currentId, { $inc: { followingsCount: 1 } });
+		await User.findByIdAndUpdate(followedId, { $inc: { listenersCount: 1 } });
+
+		res.status(200).json({ message: 'Followed successfully.' });
+	} catch (error) {
+		if (error.code === 11000) {
+			return res.status(400).json({ message: 'You are already following this user.' });
+		}
+		res.status(500).json({ message: 'Failed to follow user.', error: error.message });
+	}
 });
 
-// Unfollow a user
-router.delete('/unfollow', async (req, res) => {
-    const { by, followed } = req.body;
+router.post('/unfollow', authenticateUser, async (req, res) => {
+	const { email, followedId } = req.body; 
 
-    try {
-        await Following.findOneAndDelete({ by, followed });
+	try {
+		// Retrieve the current user's ID using their email
+		const currentUser = await User.findOne({ email });
+		if (!currentUser) {
+			return res.status(404).json({ message: 'Current user not found.' });
+		}
+		const currentId = currentUser._id;
 
-        // Update follow counts
-        await User.findByIdAndUpdate(by, { $inc: { followingsCount: -1 } });
-        await User.findByIdAndUpdate(followed, { $inc: { listenersCount: -1 } });
+		// Retrieve the ID of the user to unfollow
+		const userToUnfollow = await User.findById(followedId);
+		if (!userToUnfollow) {
+			return res.status(404).json({ message: 'User to unfollow not found.' });
+		}
 
-        res.status(200).json({ message: 'Unfollowed successfully.' });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to unfollow user.', error: error.message });
-    }
-});
+		if (String(currentId) === String(followedId)) {
+			return res.status(400).json({ message: 'You cannot unfollow yourself.' });
+		}
 
-// Get followers of a user
-router.get('/:userId/followers', async (req, res) => {
-    try {
-        const followers = await Following.find({ followed: req.params.userId })
-            .populate('by', 'email profilePicture bio');
+		// Delete the follow relationship
+		const unfollowResult = await Following.findOneAndDelete({ by: currentId, followed: followedId });
+		if (!unfollowResult) {
+			return res.status(400).json({ message: 'You are not following this user.' });
+		}
 
-        res.status(200).json(followers);
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to get followers.', error: error.message });
-    }
-});
+		// Update follow counts
+		await User.findByIdAndUpdate(currentId, { $inc: { followingsCount: -1 } });
+		await User.findByIdAndUpdate(followedId, { $inc: { listenersCount: -1 } });
 
-// Get users a user is following
-router.get('/:userId/following', async (req, res) => {
-    try {
-        const following = await Following.find({ by: req.params.userId })
-            .populate('followed', 'email profilePicture bio');
-
-        res.status(200).json(following);
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to get following.', error: error.message });
-    }
-});
-
-router.get('/get-all', async (req, res) => {
-    try {
-        const users = await User.find(); // Fetch all users
-        console.log('All Users:', users); // Print users to the console
-        res.status(200).json(users); // Send users as response to confirm
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        res.status(500).json({ message: 'Error retrieving users.' });
-    }
+		res.status(200).json({ message: 'Unfollowed successfully.' });
+	} catch (error) {
+		console.error("Error in unfollow:", error);
+		res.status(500).json({ message: 'Failed to unfollow user.', error: error.message });
+	}
 });
 
 

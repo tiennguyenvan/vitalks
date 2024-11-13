@@ -8,6 +8,7 @@ const LoginForm = ({ title }) => {
     const [isCodeSent, setIsCodeSent] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+	const [formMessgage, setFormMessgage] = useState('');
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleCodeChange = (e) => setValidationCode(e.target.value);
@@ -20,7 +21,8 @@ const LoginForm = ({ title }) => {
         try {
             const response = await axios.post(`${Env.SERVER_URL}/users/request-code`, { email });
             if (response.status === 200) {
-                alert('Validation code sent! Check your email.');
+                // alert('Validation code sent! Check your email.');
+				setFormMessgage('Validation code sent! Check your email.')
                 setIsCodeSent(true); // Show the validation input after email submission
             } else {
                 setErrorMessage(response.data.message || 'Failed to send validation code.');
@@ -40,11 +42,12 @@ const LoginForm = ({ title }) => {
         try {
             const response = await axios.post(`${Env.SERVER_URL}/users/verify-code`, { email, code: validationCode });
             if (response.status === 200) {
-                alert('Login successful!');
+                // alert('Login successful!');
+				localStorage.setItem('user', JSON.stringify(response.data.user));
                 localStorage.setItem('email', email);
                 localStorage.setItem('code', validationCode);
                 // Redirect to profile or another page
-                window.location.href = '/profile';
+                window.location.href = `/profile/${response.data.user._id}`;
             } else {
                 setErrorMessage(response.data.message || 'Invalid validation code. Please try again.');
             }
@@ -64,6 +67,8 @@ const LoginForm = ({ title }) => {
         <div className="login-container">
             <form className="form__element" onSubmit={isCodeSent ? verifyCode : getValidationCode}>
                 <h3 className="form__title">{isCodeSent ? 'Enter Validation Code' : title}</h3>
+				
+				{formMessgage && <p className="form__msg">{formMessgage}</p>}
 
                 {!isCodeSent ? (
                     <>
@@ -104,16 +109,17 @@ const LoginForm = ({ title }) => {
                             Login
                         </button>
 
-                        <p>
+                        {/* <p>
                             Didn’t receive a code?{' '}
                             <button onClick={resendCode}>Resend Code</button>
-                        </p>
+                        </p> */}
                     </>
                 )}
 
+				
                 {errorMessage && <p className="form__error">{errorMessage}</p>}
 
-                <span className="form__text">Or</span>
+                {/* <span className="form__text">Or</span>
 
                 <button type="button" className="form__button form__button--secondary">
                     <img
@@ -122,7 +128,7 @@ const LoginForm = ({ title }) => {
                         className="social-logo"
                     />
                     Sign in with Google
-                </button>
+                </button> */}
             </form>
         </div>
     );
