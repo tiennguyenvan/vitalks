@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { sendValidationEmail } = require('../utils/email');
-const { generateValidationCode, saveValidationCode } = require('../services/validation');
+const { generateValidationCode, saveValidationCode } = require('../utils/validation');
 const User = require('../models/User');
 const Following = require('../models/Following');
+const Category = require('../models/Category');
 
 router.delete('/delete-all-users', async (req, res) => {
     try {
@@ -118,6 +119,47 @@ router.post('/get-user-data', async (req, res) => {
     });
 
     return res.status(200).json(responseData);
+});
+
+
+
+
+////////////////////////////////////////////////////////////////////////
+// CREATE DEMO CATEGORIES
+////////////////////////////////////////////////////////////////////////
+/**
+ * POST /test/create-demo-categories
+ * Creates demo categories for testing purposes
+ * 
+ * Response:
+ * - message (String): Confirmation message
+ * - categories (Array): List of created demo categories
+ * 
+curl -X POST http://localhost:5001/test/create-demo-categories \
+-H "Content-Type: application/json"
+ * 
+ */
+router.post('/create-demo-categories', async (req, res) => {
+    const demoCategories = [
+        { name: 'Mental Health' },
+        { name: 'Physical Fitness' },
+        { name: 'Nutrition' },
+        { name: 'Sleep Health' },
+        { name: 'Chronic Illness' }
+    ];
+
+    try {
+        // Insert demo categories if they don't already exist
+        const categories = await Category.insertMany(demoCategories, { ordered: false });
+        res.status(201).json({ message: 'Demo categories created successfully', categories });
+    } catch (error) {
+        // If categories already exist, they will be skipped due to the unique constraint
+        if (error.code === 11000) {
+            return res.status(409).json({ message: 'Some categories already exist' });
+        }
+        console.error("Error creating demo categories:", error);
+        res.status(500).json({ message: 'Failed to create demo categories', error: error.message });
+    }
 });
 
 module.exports = router;
