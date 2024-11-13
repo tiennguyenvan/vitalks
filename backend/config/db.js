@@ -2,8 +2,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Env = require('../utils/env');
 
-// const uri = process.env.REACT_APP_MONGODB_URI;
-const uri = Env.MONGODB_URI;
+const uri = process.env.REACT_APP_MONGODB_URI;
+// const uri = Env.MONGODB_URI;
 
 async function connectDB() {
     try {
