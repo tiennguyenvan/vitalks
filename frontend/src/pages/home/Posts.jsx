@@ -103,7 +103,7 @@ const Posts = ({ posts }) => {
                     : comments.slice(-5);
 
                 return (
-                    <div className="post" key={index} >
+                    <div className="post" key={index} id={`post_${index}`}>
                         <div className="post__header">
                             <img 
                                 src={post.author?.profilePicture || "https://via.placeholder.com/40"} 
@@ -141,7 +141,7 @@ const Posts = ({ posts }) => {
                                 {/* View More Link if comments are more than 5 */}
                                 {comments.length > 5 && !expandedComments[index] && (
                                     <div className="view__more">
-                                        <a href="#" onClick={() => toggleExpandComments(index)} className="view__more-link">
+                                        <a href={`#post_${index}`} onClick={() => toggleExpandComments(index)} className="view__more-link">
                                             View more comments
                                         </a>
                                     </div>
