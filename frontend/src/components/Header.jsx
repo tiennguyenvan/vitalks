@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import userPhoto from '../assets/images/profile-user-photo-1.png';
-import { FaBars, FaHouse, FaPeopleGroup, FaMessage, FaBell, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
+import { FaBars, FaHouse, FaCircleUser, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
 import SiteLogo from './SiteLogo';
 
 const Header = () => {
@@ -50,17 +50,9 @@ const Header = () => {
 									<span className="nav__icon"><FaHouse /></span>
 									<span className="nav__label">Home</span>
 								</a>
-								<a href="/community" className="navbar__link">
-									<span className="nav__icon"><FaPeopleGroup /></span>
-									<span className="nav__label">Community</span>
-								</a>
-								<a href="/messaging" className="navbar__link">
-									<span className="nav__icon"><FaMessage /></span>
-									<span className="nav__label">Messaging</span>
-								</a>
-								<a href="/notification" className="navbar__link">
-									<span className="nav__icon"><FaBell /></span>
-									<span className="nav__label">Notifications</span>
+								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className="navbar__link">
+									<span className="nav__icon"><FaCircleUser /></span>
+									<span className="nav__label">Profile</span>
 								</a>
 								<div className="navbar__profile">
 									<div className="navbar__profile-info">
@@ -69,7 +61,6 @@ const Header = () => {
 										<img src={userPhoto} alt="Profile" className="navbar__profile-image" />
 									</div>
 									<div className="navbar__submenu">
-										<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className="navbar__submenu-item">Profile</a>
 										<a onClick={(e) => {
 											e.preventDefault();
 											localStorage.removeItem('email');
