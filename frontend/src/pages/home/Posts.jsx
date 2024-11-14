@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaHeart, FaComment, FaShareNodes } from "react-icons/fa6";
+import Env from '../../utils/Env';
 
 const Posts = ({ posts }) => {
     return (
@@ -21,7 +22,7 @@ const Posts = ({ posts }) => {
                     <div className="post__content">
                         <p className="post__text">{post.content}</p>
                         {post.imageURL && (
-                            <img src={post.imageURL} alt="Post feature" className="post__image" />
+                            <img src={`${Env.SERVER_URL}${post.imageURL}`} alt="Post feature" className="post__image" />
                         )}
                     </div>
                     <div className="post__reactions">
