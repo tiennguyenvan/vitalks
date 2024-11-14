@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHeart, FaComment, FaShareNodes } from "react-icons/fa6";
 import Env from '../../utils/Env';
 import { formatDistanceToNow } from 'date-fns';
 
 const Posts = ({ posts }) => {
-    const [visibleCommentBoxes, setVisibleCommentBoxes] = useState(
-        posts.map(() => false)
-    );
+    const [dropdownVisibleIndex, setDropdownVisibleIndex] = useState(null);
 
-    const [expandedComments, setExpandedComments] = useState(
+    const toggleDropdown = (index) => {
+        setDropdownVisibleIndex(prevIndex => (prevIndex === index ? null : index));
+    };
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Close the dropdown if click happens outside dropdown button or menu
+            if (!event.target.closest('.post__options') && !event.target.closest('.dropdown__menu')) {
+                setDropdownVisibleIndex(null);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const [visibleCommentBoxes, setVisibleCommentBoxes] = useState(
         posts.map(() => false)
     );
 
@@ -19,6 +36,10 @@ const Posts = ({ posts }) => {
             return newState;
         });
     };
+
+    const [expandedComments, setExpandedComments] = useState(
+        posts.map(() => false)
+    );
 
     const toggleExpandComments = (index) => {
         setExpandedComments(prevState => {
@@ -114,7 +135,22 @@ const Posts = ({ posts }) => {
                                 <span className="post__username">{post.author?.name || "Unknown User"}</span>
                                 <span className="post__time">{new Date(post.createdAt).toLocaleString()}</span>
                             </div>
-                            <button className="post__options">•••</button>
+                            <button 
+                                className="post__options" 
+                                onClick={(e) => {
+                                    toggleDropdown(index);
+                                }}
+                            >
+                                •••
+                            </button>
+                            
+                            {/* Dropdown menu */}
+                            {dropdownVisibleIndex === index && (
+                                <div className="post__options-dropdown">
+                                    <div className="post__options-dropdown__item">Edit post</div>
+                                    <div className="post__options-dropdown__item">Move to trash</div>
+                                </div>
+                            )}
                         </div>
                         <div className="post__content">
                             <p className="post__text">{post.content}</p>
