@@ -39,6 +39,7 @@ app.use('/categories', categoriesRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/test', testRouter);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
