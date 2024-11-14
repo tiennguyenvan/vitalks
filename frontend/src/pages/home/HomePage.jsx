@@ -21,9 +21,9 @@ const HomePage = () => {
                                         <div className="profile__name">John Doe</div>
                                         <div className="profile__details">Connecting the world one thought at a time</div>
                                         <div className="profile__stats">
-                                            <div className="profile__stat"><strong>2,453</strong> <div>Thoughts</div></div>
-                                            <div className="profile__stat"><strong>9,999</strong> <div>Listeners</div></div>
-                                            <div className="profile__stat"><strong>499</strong> <div>Following</div></div>
+                                            <div className="profile__stat"><strong>2,453</strong><div>Thoughts</div></div>
+                                            <div className="profile__stat"><strong>9,999</strong><div>Listeners</div></div>
+                                            <div className="profile__stat"><strong>499</strong><div>Following</div></div>
                                         </div>
                                     </div>
                                 </div>

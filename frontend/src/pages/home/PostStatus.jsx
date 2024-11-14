@@ -82,22 +82,24 @@ const PostStatus = ({ refreshPosts }) => {
 				></textarea>
 				<div className="feed__input-options" style={{ flexWrap: "wrap" }}>
 					{/* Category select */}
-					<select
-						value={selectedCategory}
-						onChange={handleCategoryChange}
-						className="feed__input-category"
-						required
-					>
-						<option value="">Select a category</option>
-						{categories.map(category => (
-							<option key={category._id} value={category._id}>
-								{category.name}
-							</option>
-						))}
-					</select>
+					<div>
+						<select
+							value={selectedCategory}
+							onChange={handleCategoryChange}
+							className="feed__input-category"
+							required
+						>
+							<option value="">Select a category</option>
+							{categories.map(category => (
+								<option key={category._id} value={category._id}>
+									{category.name}
+								</option>
+							))}
+						</select>
 
-					{/* Image upload */}
-					<input type="file" accept="image/*" onChange={handleImageChange} />
+						{/* Image upload */}
+						<input type="file" accept="image/*" onChange={handleImageChange} />
+					</div>
 
 					<button
 						className="feed__input-button form__button form__button--primary"

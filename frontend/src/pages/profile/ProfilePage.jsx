@@ -117,23 +117,23 @@ const ProfilePage = () => {
 									<h2 id="userName">John Doe</h2>
 									<div className="star_stats">
 										<div className="star_stat">
-											<strong>{profileUserInfo.thoughtsCount}</strong> Thoughts
+											<strong>{profileUserInfo.thoughtsCount}</strong><div>Thoughts</div>
 										</div>
 										<div className="star_stat">
-											<strong>{profileUserInfo.listenersCount}</strong> Listeners
+											<strong>{profileUserInfo.listenersCount}</strong><div>Listeners</div>
 										</div>
 										<div className="star_stat">
-											<strong>{profileUserInfo.followingsCount}</strong> Following
+											<strong>{profileUserInfo.followingsCount}</strong><div>Following</div>
 										</div>
-										<div className="star_stat">
-											{currentUser && currentUser._id && currentUser._id !== profileUserId && <>
+										{currentUser && currentUser._id && currentUser._id !== profileUserId && <>
+											<div className="star_stat">
 												<div className="profilefollow-btn">
 													<button className="btn follow-btn profile__button--primary" onClick={handleFollowToggle}>
 														{isFollowing ? "Unfollow" : "Follow"}
 													</button>
 												</div>
-											</>}
-										</div>
+											</div>
+										</>}
 									</div>
 								</div>
 							</div>

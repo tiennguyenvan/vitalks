@@ -138,6 +138,25 @@
     margin-top: 8px;
 }
 
+.feed__input-category,
+input[type="file"] {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="file"] {
+    padding: 5px;
+}
+
+.feed__input-category:focus {
+    outline: none;
+}
+
 .feed__input-anonymous {
     color: #555;
     flex: 1;
