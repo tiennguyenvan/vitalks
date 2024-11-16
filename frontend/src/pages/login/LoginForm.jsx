@@ -64,73 +64,71 @@ const LoginForm = ({ title }) => {
     };
 
     return (
-        <div className="login-container">
-            <form className="form__element" onSubmit={isCodeSent ? verifyCode : getValidationCode}>
-                <h3 className="form__title">{isCodeSent ? 'Enter Validation Code' : title}</h3>
-				
-				{formMessgage && <p className="form__msg">{formMessgage}</p>}
+        <form className="form__element" onSubmit={isCodeSent ? verifyCode : getValidationCode}>
+            <h3 className="form__title">{isCodeSent ? 'Enter Validation Code' : title}</h3>
+            
+            {formMessgage && <p className="form__msg">{formMessgage}</p>}
 
-                {!isCodeSent ? (
-                    <>
-                        <div className="form__group">
-                            <label className="form__label" htmlFor="email">Login with email</label>
-                            <input
-                                type="email"
-                                className="form__input"
-                                id="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                placeholder="Enter email"
-                                disabled={isLoading}
-                                required
-                            />
-                        </div>
+            {!isCodeSent ? (
+                <>
+                    <div className="form__group">
+                        <label className="form__label" htmlFor="email">Login with email</label>
+                        <input
+                            type="email"
+                            className="form__input"
+                            id="email"
+                            value={email}
+                            onChange={handleEmailChange}
+                            placeholder="Enter email"
+                            disabled={isLoading}
+                            required
+                        />
+                    </div>
 
-                        <button type="submit" className="form__button form__button--primary" disabled={isLoading}>
-                            {isLoading ? 'Loading...' : 'Get Validation Code'}
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <div className="form__group">
-                            <label className="form__label" htmlFor="code">Enter Validation Code</label>
-                            <input
-                                type="text"
-                                className="form__input"
-                                id="code"
-                                value={validationCode}
-                                onChange={handleCodeChange}
-                                placeholder="Enter the code"
-                                required
-                            />
-                        </div>
+                    <button type="submit" className="form__button form__button--primary" disabled={isLoading}>
+                        {isLoading ? 'Loading...' : 'Get Validation Code'}
+                    </button>
+                </>
+            ) : (
+                <>
+                    <div className="form__group">
+                        <label className="form__label" htmlFor="code">Enter Validation Code</label>
+                        <input
+                            type="text"
+                            className="form__input"
+                            id="code"
+                            value={validationCode}
+                            onChange={handleCodeChange}
+                            placeholder="Enter the code"
+                            required
+                        />
+                    </div>
 
-                        <button type="submit" className="form__button form__button--primary">
-                            Login
-                        </button>
+                    <button type="submit" className="form__button form__button--primary">
+                        Login
+                    </button>
 
-                        {/* <p>
-                            Didn’t receive a code?{' '}
-                            <button onClick={resendCode}>Resend Code</button>
-                        </p> */}
-                    </>
-                )}
+                    {/* <p>
+                        Didn’t receive a code?{' '}
+                        <button onClick={resendCode}>Resend Code</button>
+                    </p> */}
+                </>
+            )}
 
-				
-                {errorMessage && <p className="form__error">{errorMessage}</p>}
+            
+            {errorMessage && <p className="form__error">{errorMessage}</p>}
 
-                {/* <span className="form__text">Or</span>
+            {/* <span className="form__text">Or</span>
 
-                <button type="button" className="form__button form__button--secondary">
-                    <img
-                        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                        alt="Google logo"
-                        className="social-logo"
-                    />
-                    Sign in with Google
-                </button> */}
-            </form>
-        </div>
+            <button type="button" className="form__button form__button--secondary">
+                <img
+                    src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                    alt="Google logo"
+                    className="social-logo"
+                />
+                Sign in with Google
+            </button> */}
+        </form>
     );
 };
 
