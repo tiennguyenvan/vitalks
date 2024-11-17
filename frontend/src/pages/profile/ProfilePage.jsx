@@ -5,7 +5,6 @@ import Header from "../../components/Header";
 import profileBG from "../../assets/images/profile-user-background.png";
 import "./ProfilePage.scss";
 import profileUser from "../../assets/images/profile-user-photo-1.png";
-import SideBarItem from "../home/SideBarItem";
 import Feed from "../home/Feed";
 import Env from "../../utils/Env";
 
@@ -100,40 +99,45 @@ const ProfilePage = () => {
 			<Header />
 			<div className="container">
 				<div className="main">
-					<div className="star">
-						<img id="profileStarBG" src={profileBG} alt="Background" />
+					<div className="profile profile__cover-container">
+						<img 
+							className="profile__cover-photo"
+							id="profileStarBG" 
+							src={profileBG} 
+							alt="Cover Photo" />
 
 						<div className="row">
-							<div className="starinfo">
-								<div className="avatar">
+							<div className="profile__info">
+								<div className="profile__photo-container">
 									<img
+										className="profile__photo"
 										src={profileUser}
 										alt="Avatar"
 										style={{ height: 100, width: 100 }}
 									/>
 								</div>
 
-								<div className="details">
-									<h2 id="userName">John Doe</h2>
-									<div className="star_stats">
-										<div className="star_stat">
-											<strong>{profileUserInfo.thoughtsCount}</strong><div>Thoughts</div>
-										</div>
-										<div className="star_stat">
-											<strong>{profileUserInfo.listenersCount}</strong><div>Listeners</div>
-										</div>
-										<div className="star_stat">
-											<strong>{profileUserInfo.followingsCount}</strong><div>Following</div>
-										</div>
+								<div className="info">
+									<div className="info__main">
+										<h2 className="info__name">John Doe</h2>
 										{currentUser && currentUser._id && currentUser._id !== profileUserId && <>
-											<div className="star_stat">
-												<div className="profilefollow-btn">
-													<button className="btn follow-btn profile__button--primary" onClick={handleFollowToggle}>
-														{isFollowing ? "Unfollow" : "Follow"}
-													</button>
-												</div>
+											<div className="info_buttons">
+												<button className="btn form__button form__button--follow" onClick={handleFollowToggle}>
+													{isFollowing ? "Unfollow" : "Follow"}
+												</button>
 											</div>
 										</>}
+									</div>
+									<div className="items">
+										<div className="item">
+											<strong>{profileUserInfo.thoughtsCount}</strong><div>Thoughts</div>
+										</div>
+										<div className="item">
+											<strong>{profileUserInfo.listenersCount}</strong><div>Listeners</div>
+										</div>
+										<div className="item">
+											<strong>{profileUserInfo.followingsCount}</strong><div>Following</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -143,7 +147,11 @@ const ProfilePage = () => {
 					
 					<div className="row">
 						<div className="row__sidebar col-md-4 col-sm-12">
-							<SideBarItem title={"About"} url={"/"} />
+						<aside className="sidebar">
+							<div className="sidebar__head">
+								<h3 className="sidebar__title">About</h3>
+							</div>
+						</aside>
 						</div>
 						<div className="row__feed col-md-8 col-sm-12">
 							<Feed />

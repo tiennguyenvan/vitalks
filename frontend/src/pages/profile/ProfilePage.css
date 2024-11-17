@@ -1,14 +1,13 @@
-.star {
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+.page-profile .profile__cover-container {
   margin-bottom: 25px;
 }
-
-#profileStarBG {
+.page-profile .profile__cover-photo {
   width: 100%;
   height: auto;
   border-radius: 20px;
 }
-
-.starinfo {
+.page-profile .profile__info {
   display: flex;
   align-items: center;
   float: left;
@@ -18,13 +17,20 @@
   margin-left: 100px;
 }
 
-#userName {
-  font-weight: bold;
-  color: aliceblue;
+.page-profile .info__main {
+  display: flex;
+  align-items: center;
 }
-
-.star_stats {
-  background-color: var(--main-background);
+.page-profile .info__name {
+  font-weight: bold;
+  color: #FFF;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  margin-right: 15px;
+}
+.page-profile .items {
+  background-color: #F6F6F6;
   display: flex;
   justify-content: space-around;
   margin-top: 15px;
@@ -34,73 +40,23 @@
   overflow: hidden;
 }
 
-.star_stat {
+.page-profile .item {
   font-size: 0.9em;
   color: #333;
   flex: 1;
   text-align: center;
   padding: 10px;
 }
-
-.star_stat:not(:first-child) {
-  border-left: 1px solid var(--input-border);
+.page-profile .item:not(:first-child) {
+  border-left: 1px solid #ccc;
 }
 
-.star_row {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.form__button--follow {
+  background-color: #FFF;
+  color: #1E1E1E;
+  padding: 8px 25px;
 }
-
-.profilefollow-btn button {
-  background-color: var(--main-background);
-  height: 50px;
-  width: 120px;
-  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
-  color: black;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.profile__button--primary:hover {
-  background-color: var(--primary-btn-hover);
+.form__button--follow:hover {
+  background-color: #414141;
   color: #fff;
-}
-
-/* Responsiveness */
-@media only screen and (max-width: 1024px) {
-  #profileStarBG {
-    max-width: 100%;
-  }
-  .starinfo {
-    display: none;
-  }
-  .star_stats {
-    display: none;
-  }
-  .star_gap {
-    display: none;
-  }
-  .page-profile .row__feed {
-    width: 100%;
-  }
-  .profilefollow-btn {
-    padding-right: 0;
-    padding-top: 0;
-  }
-  .profilefollow-btn button {
-    position: relative;
-    float: right;
-    padding-right: 10%;
-    padding-top: 1%;
-  }
-}
-.page-profile .feed {
-  width: 100%;
-  max-width: 100%;
-}
-
-.page-profile .sidebar__link {
-  display: none;
 }/*# sourceMappingURL=ProfilePage.css.map */
