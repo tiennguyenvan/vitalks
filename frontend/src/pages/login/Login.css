@@ -1,9 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 .page-login {
-  background-color: #fff;
+  background-color: #FFF;
 }
 
 span.yellow {
-  color: var(--yellow);
+  color: #FFFF00;
 }
 
 .hero {
@@ -16,7 +17,6 @@ span.yellow {
   align-items: center;
   box-sizing: border-box;
 }
-
 .hero::before {
   content: "";
   position: absolute;
@@ -26,7 +26,6 @@ span.yellow {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
 .hero__body {
   position: relative;
   padding: 25px;
@@ -35,25 +34,8 @@ span.yellow {
   color: #fff;
   width: 90%;
 }
-
 .hero__body > h2 {
   font-weight: bold;
-}
-
-/* Form */
-.form {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-  background-image: url("../../assets/images/vector-circle-black.png");
-  background-position: 120% 125%;
-  background-repeat: no-repeat;
-  background-size: 300px;
-  box-sizing: border-box;
 }
 
 .divider {
@@ -71,30 +53,40 @@ span.yellow {
   width: auto;
 }
 
+/* Form */
+.form {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  background-image: url("../../assets/images/vector-circle-black.png");
+  background-position: 120% 125%;
+  background-repeat: no-repeat;
+  background-size: 300px;
+  box-sizing: border-box;
+}
 .form__element {
   display: flex;
   flex-direction: column;
 }
-
 .form__title {
   font-size: 2.8em;
   margin-bottom: 20px;
   font-weight: bold;
 }
-
 .form__group {
   margin-bottom: 15px;
 }
-
 .form__label {
   margin-bottom: 5px;
 }
-
 .form__text {
   margin: 10px 0;
   text-align: center;
 }
-
 .form__input {
   width: 100%;
   padding: 10px;
@@ -103,7 +95,6 @@ span.yellow {
   box-sizing: border-box;
   font-size: 1em;
 }
-
 .form__button {
   padding: 10px 15px;
   background-color: var(--primary-btn);
@@ -114,21 +105,17 @@ span.yellow {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
 .form__button--primary:hover {
   background-color: var(--primary-btn-hover);
 }
-
 .form__button--secondary {
   background-color: #fff;
   color: var(--primary-btn);
   border: 1px solid var(--primary-btn);
 }
-
 .form__button--secondary:hover {
   background-color: #e9e9e9;
 }
-
 .form__error {
   margin: 20px 0 0;
   color: #ff152b;
@@ -162,7 +149,7 @@ span.yellow {
     left: 50%;
     transform: translateX(-50%);
   }
-  .page-logint .breakline {
+  .page-login .breakline {
     display: none;
   }
   /* Form */

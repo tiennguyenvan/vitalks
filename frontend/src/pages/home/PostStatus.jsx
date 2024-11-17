@@ -98,7 +98,7 @@ const PostStatus = ({ refreshPosts }) => {
 						</select>
 
 						{/* Image upload */}
-						<input type="file" accept="image/*" onChange={handleImageChange} />
+						<input type="file" className="feed__input-file" accept="image/*" onChange={handleImageChange} />
 					</div>
 
 					<button
