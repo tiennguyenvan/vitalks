@@ -148,13 +148,14 @@ router.delete('/:id', authenticateUser, async (req, res) => {
 		if (comment.parentType === 'Post') {
 			await Post.findByIdAndUpdate(
 				comment.parentId,
-				{ $inc: { commentsCount: -1 } },
-				{ new: true }
+				{ $inc: { commentsCount: -1 }, $min: { commentsCount: 0 } },
+				{ new: true },
+				
 			);
 		} else if (comment.parentType === 'Comment') {
 			await Comment.findByIdAndUpdate(
 				comment.parentId,
-				{ $inc: { repliesCount: -1 } },
+				{ $inc: { repliesCount: -1 }, $min: { commentsCount: 0 } },
 				{ new: true }
 			);
 		}

@@ -5,7 +5,8 @@ const { authenticateUser } = require('../utils/validation');
 const Comment = require('../models/Comment');
 const User = require('../models/User');
 const upload = require('../utils/upload'); // Import the upload utility
-
+const fs = require('fs');
+const path = require('path');
 
 ////////////////////////////////////////////////////////////////////////
 // CREATE A NEW POST
@@ -44,6 +45,8 @@ router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
         });
 
         await post.save();
+		user.thoughtsCount += 1;
+		await user.save();
         res.status(201).json({ message: 'Post created successfully', post });
     } catch (error) {
         console.error("Error creating post:", error);
@@ -161,8 +164,19 @@ router.delete('/:id', authenticateUser, async (req, res) => {
         // Delete all comments and their replies associated with this post
         await deletePostCommentsAndReplies(id);
 
+		if (post.imageURL) {
+            const imagePath = path.join(__dirname, '..', post.imageURL);
+            fs.unlink(imagePath, (err) => {
+                if (err) console.error("Error deleting image:", err);
+            });
+        }
+
         // Delete the post itself
         await Post.findByIdAndDelete(id);
+		if (user.thoughtsCount > 0) {
+			user.thoughtsCount--;
+            await user.save();
+		}
 
         res.status(200).json({ message: 'Post and all associated comments (including replies) deleted successfully.' });
     } catch (error) {
@@ -195,7 +209,9 @@ router.delete('/:id', authenticateUser, async (req, res) => {
  */
 router.patch('/:id', authenticateUser, upload.single('image'), async (req, res) => {
     const { id } = req.params;
-    const { email, content, categoryId } = req.body;
+    const { email, content, categoryId, oldPostImage } = req.body;
+
+	// console.log({ email, content, categoryId, oldPostImage })
 
     try {
         // Fetch the user making the request
@@ -203,7 +219,6 @@ router.patch('/:id', authenticateUser, upload.single('image'), async (req, res) 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
-
         // Find the post to update
         const post = await Post.findById(id);
         if (!post) {
@@ -220,13 +235,19 @@ router.patch('/:id', authenticateUser, upload.single('image'), async (req, res) 
         if (categoryId) post.categoryId = categoryId;
 
         // Update the image if provided
+		if (post.imageURL && (!oldPostImage || req.file)) {
+			const oldImagePath = path.join(__dirname, '..', post.imageURL);
+			fs.unlink(oldImagePath, (err) => {
+				if (err) console.error("Error deleting old image:", err);
+			});
+			post.imageURL = null;
+		}
+
         if (req.file) {
             post.imageURL = `/uploads/${req.file.filename}`;
-        }
+        } 
 
-        // Save the updated post
         await post.save();
-
         res.status(200).json({ message: 'Post updated successfully.', post });
     } catch (error) {
         console.error("Error updating post:", error);

@@ -6,11 +6,16 @@ import { getCurrentUserEmailCode, isUserLoggedIn, redirectToLogin } from '../uti
 
 const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 	const [content, setContent] = useState(post?.content || "");
-	const [image, setImage] = useState(null);
+	const [image, setImage] = useState(post?.imageURL || null);
+	const [imagePreview, setImagePreview] = useState(
+		post?.imageURL ? `${Env.SERVER_URL}${post.imageURL}` : null
+	);
+	const [oldPostImage, setOldPostImage] = useState(post?.imageURL || null);
 	const [categories, setCategories] = useState([]);
-	const [selectedCategory, setSelectedCategory] = useState(post?.categoryId || "");
-	
+	const [selectedCategory, setSelectedCategory] = useState(post?.categoryId?._id || "");
 
+
+	if (post) { console.log({ post, image }) }
 	// Fetch categories on load
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -28,34 +33,39 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 		redirectToLogin();
 		return null;
 	}
-	const {email, code} = getCurrentUserEmailCode();
-	
-	// Handle content change
+	const { email, code } = getCurrentUserEmailCode();
+
 	const handleContentChange = (e) => setContent(e.target.value);
 
-	// Handle image change
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
-		if (file) setImage(file);
+		if (file) {
+			setImage(file)
+			setImagePreview(URL.createObjectURL(file));
+		};
+
+	};
+	const removeImage = () => {
+		setImagePreview(null);
+		setImage(null);
+		setOldPostImage(null);
 	};
 
-	// Handle category selection
 	const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
 
-	// Handle form submission
 	const handleSubmit = async () => {
 		if (!content.trim() || !selectedCategory) {
 			alert("Post content and category are required.");
 			return;
 		}
-		
-		// Prepare form data
+
 		const formData = new FormData();
 		formData.append("content", content);
 		formData.append("categoryId", selectedCategory);
-		// formData.append("email", email);
-		// formData.append("code", code);
+		formData.append("email", email);
+		formData.append("code", code);
 		if (image) formData.append("image", image);
+		if (oldPostImage) formData.append("oldPostImage", image);
 
 		try {
 			if (post) {
@@ -64,7 +74,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 					headers: {
 						"Content-Type": "multipart/form-data",
 						"X-User-Email": email,
-        				"X-User-Code": code
+						"X-User-Code": code
 					}
 				});
 				alert("Post updated successfully.");
@@ -75,15 +85,16 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 					headers: {
 						"Content-Type": "multipart/form-data",
 						"X-User-Email": email,
-        				"X-User-Code": code
+						"X-User-Code": code
 					}
 				});
 				// Clear inputs and refresh posts
-				setContent("");
-				setImage(null);
-				setSelectedCategory("");
-				refreshPosts(); // Callback to reload posts after submission
 			}
+			refreshPosts(); // Callback to reload posts after submission
+			setContent("");
+			setImage(null);
+			setSelectedCategory("");
+
 		} catch (error) {
 			console.error("Error submitting post:", error);
 			alert("Failed to submit post. Please try again.");
@@ -118,9 +129,29 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 							))}
 						</select>
 
-						{/* Image upload */}
-						<input type="file" className="feed__input-file" accept="image/*" onChange={handleImageChange} />
+						{imagePreview ?
+							<div className="feed__image-preview">
+								<img src={imagePreview} alt="Uploaded" className="feed__image-thumbnail" />
+								<button onClick={removeImage} className="feed__image-remove">x</button>
+							</div>
+							:
+							<input
+								type="file"
+								className="feed__input-file"
+								accept="image/*"
+								onChange={handleImageChange}
+							/>
+						}
 					</div>
+
+					{post && (
+						<button
+							className="feed__input-button form__button form__button--secondary"
+							onClick={onSubmit}
+						>
+							Cancel
+						</button>
+					)}
 
 					<button
 						className="feed__input-button form__button form__button--primary"
