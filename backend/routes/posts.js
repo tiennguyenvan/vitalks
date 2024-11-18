@@ -26,8 +26,7 @@ const upload = require('../utils/upload'); // Import the upload utility
 
 router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
     const { content, categoryId } = req.body;
-    const email = req.body.email;
-	
+    const email = req.body.email || req.params.email || req.headers['x-user-email'];;	
 	
     try {
         const user = await User.findOne({ email });
@@ -65,7 +64,8 @@ router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
  */
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find().populate('author').populate('categoryId');
+        const posts = await Post.find().populate('author').populate('categoryId').sort({ createdAt: -1 });
+
         res.status(200).json(posts);
     } catch (error) {
         console.error("Error fetching posts:", error);
@@ -171,6 +171,68 @@ router.delete('/:id', authenticateUser, async (req, res) => {
     }
 });
 
+////////////////////////////////////////////////////////////////////////
+// UPDATE A POST
+////////////////////////////////////////////////////////////////////////
+/**
+ * PATCH /posts/:id
+ * Updates a post by its ID.
+ * 
+ * Request Parameters:
+ * - id (ObjectId): The ID of the post to update.
+ * 
+ * Request Body:
+ * - content (String, optional): Updated content of the post.
+ * - imageURL (String, optional): Updated image URL for the post.
+ * - categoryId (ObjectId, optional): Updated category ID for the post.
+ * 
+ * Authorization:
+ * - The user must be the author of the post to update it.
+ * 
+ * Response:
+ * - message (String): Confirmation message upon successful update.
+ * - post (Object): Updated post data.
+ */
+router.patch('/:id', authenticateUser, upload.single('image'), async (req, res) => {
+    const { id } = req.params;
+    const { email, content, categoryId } = req.body;
+
+    try {
+        // Fetch the user making the request
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Find the post to update
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found.' });
+        }
+
+        // Check if the user is the author of the post
+        if (String(post.author) !== String(user._id)) {
+            return res.status(403).json({ message: 'You are not authorized to update this post.' });
+        }
+
+        // Update the post fields
+        if (content) post.content = content;
+        if (categoryId) post.categoryId = categoryId;
+
+        // Update the image if provided
+        if (req.file) {
+            post.imageURL = `/uploads/${req.file.filename}`;
+        }
+
+        // Save the updated post
+        await post.save();
+
+        res.status(200).json({ message: 'Post updated successfully.', post });
+    } catch (error) {
+        console.error("Error updating post:", error);
+        res.status(500).json({ message: 'Failed to update post.', error: error.message });
+    }
+});
 
 
 

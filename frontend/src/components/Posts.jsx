@@ -5,9 +5,11 @@ import Env from '../utils/Env';
 import Comments from './Comments';
 import { getCurrentUserEmailCode, isUserLoggedIn, redirectToLogin } from '../utils/Lib';
 import axios from 'axios';
+import PostForm from './PostForm';
 
 const Posts = ({ posts, setPosts }) => {
 	const [dropdownVisibleIndex, setDropdownVisibleIndex] = useState(null);
+	const [editingPostId, setEditingPostId] = useState(null);
 
 	const toggleDropdown = (index) => {
 		setDropdownVisibleIndex(prevIndex => (prevIndex === index ? null : index));
@@ -28,7 +30,15 @@ const Posts = ({ posts, setPosts }) => {
 		};
 	}, []);
 
-	// Delete post function
+	const refreshPosts = async () => {
+		try {
+			const response = await axios.get(`${Env.SERVER_URL}/posts`);
+			setPosts(response.data);
+		} catch (error) {
+			console.error("Error refreshing posts:", error);
+		}
+	};
+
 	const deletePost = async (postId) => {
 		if (!isUserLoggedIn()) {
 			redirectToLogin();
@@ -52,6 +62,7 @@ const Posts = ({ posts, setPosts }) => {
 			alert("Failed to delete post.");
 		}
 	};
+
 
 	return (
 		<div>
@@ -78,21 +89,32 @@ const Posts = ({ posts, setPosts }) => {
 								•••
 							</button>
 
-							{/* Dropdown menu */}
 							{dropdownVisibleIndex === index && (
 								<div className="post__options-dropdown">
-									<button className="post__options-dropdown__item">Edit</button>
+									<button className="post__options-dropdown__item" onClick={() => setEditingPostId(post._id)}>Edit</button>
 									<button className="post__options-dropdown__item" onClick={() => deletePost(post._id)}
 									>Delete</button>
 								</div>
 							)}
 						</div>
-						<div className="post__content">
-							<p className="post__text">{post.content}</p>
-							{post.imageURL && (
-								<img src={`${Env.SERVER_URL}${post.imageURL}`} alt="Post feature" className="post__image" />
-							)}
-						</div>
+						{editingPostId === post._id ? (
+							<PostForm
+								post={post}
+								refreshPosts={refreshPosts}
+								onSubmit={() => setEditingPostId(null)} // Exit edit mode after submission
+							/>
+						) : (
+							<div className="post__content">
+								<p className="post__text">{post.content}</p>
+								{post.imageURL && (
+									<img
+										src={`${Env.SERVER_URL}${post.imageURL}`}
+										alt="Post feature"
+										className="post__image"
+									/>
+								)}
+							</div>
+						)}
 						<Comments post={post} />
 					</div>
 				);

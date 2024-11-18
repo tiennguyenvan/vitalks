@@ -29,8 +29,11 @@ const activeSessions = new Map();
 // Middleware to authenticate user sessions
 const authenticateUser = async (req, res, next) => {
 	
-	const { email, code } = req.body;
-
+	const email = req.body.email || req.params.email || req.headers['x-user-email'];
+    const code = req.body.code || req.params.code || req.headers['x-user-code'];
+	
+	// console.log(req.body, req.params, req.headers, req.headers['x-user-email'],req.headers['x-user-code'])
+	// console.log({email, code})
 	// Check if email and code are provided
 	if (!email || !code) {
 		return res.status(400).json({ message: 'Email and code are required.' });
