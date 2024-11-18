@@ -17,7 +17,7 @@ const UnderConstructionPage = () => {
                     </div>
                     <div className="construction__image-wrapper">
                         
-                        <img className="construction__image" src={constructionPhoto} alt="Under Construction Image" />
+                        <img className="construction__image" src={constructionPhoto} alt="Under Construction" />
                     </div>
                 </div>
             </div>

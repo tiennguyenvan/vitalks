@@ -104,7 +104,7 @@ const ProfilePage = () => {
 							className="profile__cover-photo"
 							id="profileStarBG" 
 							src={profileBG} 
-							alt="Cover Photo" />
+							alt="User Cover" />
 
 						<div className="row">
 							<div className="profile__info">

@@ -57,11 +57,11 @@ const LoginForm = ({ title }) => {
         }
     };
 
-    const resendCode = async (e) => {
-        e.preventDefault();
-        console.log('Resending validation code...');
-        await getValidationCode(e);
-    };
+    // const resendCode = async (e) => {
+    //     e.preventDefault();
+    //     console.log('Resending validation code...');
+    //     await getValidationCode(e);
+    // };
 
     return (
         <form className="form__element" onSubmit={isCodeSent ? verifyCode : getValidationCode}>

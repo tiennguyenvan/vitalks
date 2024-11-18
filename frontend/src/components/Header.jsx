@@ -56,7 +56,7 @@ const Header = () => {
 									<span className="nav__icon"><FaHouse /></span>
 									<span className="nav__label">Home</span>
 								</a>
-								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className={`navbar__link ${location[1] == 'profile' ? 'navbar__link--active' : ''}`}>
+								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className={`navbar__link ${location[1] === 'profile' ? 'navbar__link--active' : ''}`}>
 									<span className="nav__icon"><FaCircleUser /></span>
 									<span className="nav__label">Profile</span>
 								</a>
