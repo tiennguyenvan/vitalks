@@ -6,6 +6,7 @@ import ProfilePage from './pages/profile/ProfilePage';
 import ErrorPage from './pages/status/UnderConstructionPage';
 import { isUserLoggedIn } from './utils/Lib';
 function App() {	
+	
 	return (
 		<Router>
 			<div className="App">
@@ -16,7 +17,7 @@ function App() {
 						<Route path="/profile/:id" element={<ProfilePage />} />						
 						<Route path="*" element={<ErrorPage />} />
 					</> : 
-					<>					    
+					<>						    
 						<Route path="*" element={<Navigate to="/login" />} />
 					</>
 					}					

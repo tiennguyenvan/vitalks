@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PostStatus from './PostStatus';
+import PostForm from './PostForm';
 import Posts from './Posts';
 import axios from 'axios';
-import Env from '../../utils/Env';
+import Env from '../utils/Env';
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
@@ -25,10 +25,10 @@ const Feed = () => {
     return (
         <div className="feed">
             {/* Pass refreshPosts as a prop to PostStatus */}
-            <PostStatus refreshPosts={refreshPosts} />
+            <PostForm refreshPosts={refreshPosts} />
 
             {/* Posts */}
-            <Posts posts={posts} />
+            {posts.length > 0 && <Posts posts={posts} setPosts={setPosts} />}
         </div>
     );
 };

@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import profileBG from "../../assets/images/profile-user-background.png";
 import "./ProfilePage.scss";
 import profileUser from "../../assets/images/profile-user-photo-1.png";
-import Feed from "../home/Feed";
+import Feed from "../../components/Feed";
 import Env from "../../utils/Env";
 
 const ProfilePage = () => {
@@ -53,7 +53,7 @@ const ProfilePage = () => {
 
 		fetchUserInfo();
 	}, [profileUserId]);
-
+	
 	// Handle follow/unfollow actions
 	const handleFollowToggle = async () => {
 		try {

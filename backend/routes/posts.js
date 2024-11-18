@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const { authenticateUser } = require('../utils/validation');
+const Comment = require('../models/Comment');
 const User = require('../models/User');
 const upload = require('../utils/upload'); // Import the upload utility
 
@@ -95,5 +96,82 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to retrieve post', error: error.message });
     }
 });
+
+
+const deleteCommentAndReplies = async (commentId) => {
+    const replies = await Comment.find({ parentId: commentId, parentType: 'Comment' });
+
+    for (const reply of replies) {
+        await deleteCommentAndReplies(reply._id); // Recursive call
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+};
+
+const deletePostCommentsAndReplies = async (postId) => {
+    const comments = await Comment.find({ parentId: postId, parentType: 'Post' });
+    for (const comment of comments) {
+        await deleteCommentAndReplies(comment._id); // Recursive call for each top-level comment
+    }
+};
+
+////////////////////////////////////////////////////////////////////////
+// DELETE A POST AND ITS COMMENTS
+////////////////////////////////////////////////////////////////////////
+/**
+ * DELETE /posts/:id
+ * Deletes a post by its ID and all associated comments, including nested replies.
+ * 
+ * Request Parameters:
+ * - id (ObjectId): The ID of the post to delete.
+ * 
+ * Authorization:
+ * - The user must be the author of the post or an admin to delete it.
+ * 
+ * Behavior:
+ * - Deletes the post.
+ * - Deletes all comments associated with the post, including nested replies.
+ * 
+ * Response:
+ * - message (String): Confirmation message upon successful deletion.
+ * - error (String, optional): Error message if the operation fails.
+ */
+router.delete('/:id', authenticateUser, async (req, res) => {
+    const { id } = req.params; // ID of the post to delete
+    const { email } = req.body; // Email of the user attempting to delete the post
+
+    try {
+        // Fetch the user making the request
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Find the post to delete
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found.' });
+        }
+
+        // Check if the user is the author or an admin
+        if (String(post.author) !== String(user._id)) {
+            return res.status(403).json({ message: 'You are not authorized to delete this post.' });
+        }
+
+        // Delete all comments and their replies associated with this post
+        await deletePostCommentsAndReplies(id);
+
+        // Delete the post itself
+        await Post.findByIdAndDelete(id);
+
+        res.status(200).json({ message: 'Post and all associated comments (including replies) deleted successfully.' });
+    } catch (error) {
+        console.error("Error deleting post:", error);
+        res.status(500).json({ message: 'Failed to delete post.', error: error.message });
+    }
+});
+
+
+
 
 module.exports = router;

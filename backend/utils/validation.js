@@ -28,15 +28,17 @@ const activeSessions = new Map();
 
 // Middleware to authenticate user sessions
 const authenticateUser = async (req, res, next) => {
-	if (Env.SKIP_SENDING_EMAIL) {
-		next();
-		return;
-	}
+	
 	const { email, code } = req.body;
 
 	// Check if email and code are provided
 	if (!email || !code) {
 		return res.status(400).json({ message: 'Email and code are required.' });
+	}
+	
+	if (Env.SKIP_SENDING_EMAIL) {
+		next();
+		return;
 	}
 
 	// Validate session

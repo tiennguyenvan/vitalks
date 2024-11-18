@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import userPhoto from '../../assets/images/profile-user-photo-1.png';
-import Env from '../../utils/Env';
+import userPhoto from '../assets/images/profile-user-photo-1.png';
+import Env from '../utils/Env';
 
-const PostStatus = ({ refreshPosts }) => {
+const PostForm = ({ refreshPosts }) => {
 	const [content, setContent] = useState("");
 	const [image, setImage] = useState(null);
 	const [categories, setCategories] = useState([]);
@@ -113,4 +113,4 @@ const PostStatus = ({ refreshPosts }) => {
 	);
 };
 
-export default PostStatus;
+export default PostForm;
