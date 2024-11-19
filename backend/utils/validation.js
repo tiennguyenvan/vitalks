@@ -28,7 +28,6 @@ const activeSessions = new Map();
 
 // Middleware to authenticate user sessions
 const authenticateUser = async (req, res, next) => {
-	
 	const email = req.body.email || req.params.email || req.headers['x-user-email'];
     const code = req.body.code || req.params.code || req.headers['x-user-code'];
 	

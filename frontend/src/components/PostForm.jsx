@@ -93,6 +93,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 			refreshPosts(); // Callback to reload posts after submission
 			setContent("");
 			setImage(null);
+			setImagePreview(null);
 			setSelectedCategory("");
 
 		} catch (error) {

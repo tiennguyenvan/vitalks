@@ -141,7 +141,7 @@ REACT_APP_SENDGRID_FROM_EMAIL=contact@sneeit.com
      {
          "username": "test_user",
          "email": "test@example.com",
-         "profilePicture": "http://example.com/profile.jpg",
+         "avatar": "http://example.com/profile.jpg",
          "bio": "Hello world!"
      }
      ```

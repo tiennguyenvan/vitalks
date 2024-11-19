@@ -4,6 +4,11 @@ const User = require('../models/User');
 const Following = require('../models/Following');
 const { sendValidationEmail } = require('../utils/email');
 const { generateValidationCode, saveValidationCode, getValidationCode, activeSessions, authenticateUser, activateUser } = require('../utils/validation');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const upload = multer({ dest: 'uploads/' });
+
 
 ////////////////////////////////////////////////////////////////////////
 // LOGIN PART
@@ -91,13 +96,12 @@ router.post('/is-following/:id', authenticateUser, async (req, res) => {
 // UPDATE USER DATA
 ////////////////////////////////////////////////////////////////////////
 // Update user profile
-router.patch('/update', authenticateUser, async (req, res) => {
-    const { email, code } = req.query;
-    const userUpdates = req.body;
-
+router.patch('/update', authenticateUser, upload.single('value'), async (req, res) => {
+    const { email, field, value } = req.body; // Get field and email from the request body
     const sessionCode = activeSessions.get(email);
-    if (!sessionCode || sessionCode !== code) {
-        return res.status(401).json({ message: 'Session expired. Please login again.' });
+
+    if (!sessionCode || sessionCode !== req.body.code) {
+        return res.status(401).json({ message: 'Session expired. Please log in again.' });
     }
 
     const user = await User.findOne({ email });
@@ -105,13 +109,43 @@ router.patch('/update', authenticateUser, async (req, res) => {
         return res.status(404).json({ message: 'User not found.' });
     }
 
-    if (userUpdates.profilePicture) user.profilePicture = userUpdates.profilePicture;
-    if (userUpdates.bio) user.bio = userUpdates.bio;
-    if (userUpdates.thoughtsCount !== undefined) user.thoughtsCount = userUpdates.thoughtsCount;
+    try {
+        // Handle text updates (e.g., name, bio)
+        if (field === 'name' || field === 'bio') {
+            user[field] = value;
+        }
 
-    await user.save();
-    res.status(200).json({ message: 'User profile updated successfully.' });
+        // Handle file uploads (e.g., avatar, cover)
+        else if (field === 'avatar' || field === 'cover') {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded.' });
+            }
+
+            const oldFilePath = user[field];
+            // Remove old file if it exists
+            if (oldFilePath) {
+                try {
+                    fs.unlinkSync(path.resolve(__dirname, '..', oldFilePath));
+                } catch (error) {
+                    console.error('Error deleting old file:', error);
+                }
+            }
+
+            // Save the new file path
+            user[field] = req.file.path;
+        }
+
+        await user.save();
+        res.status(200).json({
+            message: `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully.`,
+            [field]: user[field],
+        });
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(500).json({ message: 'Failed to update user profile.', error: error.message });
+    }
 });
+
 
 router.post('/follow', authenticateUser, async (req, res) => {
     const { email, followedId } = req.body; // `email` is the current user's email, `followed` is the email of the user to follow

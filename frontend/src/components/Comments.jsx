@@ -3,6 +3,7 @@ import axios from 'axios'; // Import axios for API requests
 import Env from '../utils/Env';
 import { formatDistanceToNow } from 'date-fns';
 import { fetchCurrentUser, isUserLoggedIn, redirectToLogin, getCurrentUserEmailCode } from '../utils/Lib';
+import userPhoto from '../assets/images/profile-user-photo-1.png';
 
 
 const Comments = ({ post }) => {
@@ -121,7 +122,7 @@ const Comments = ({ post }) => {
 						return (
 							<div className="comment" key={comment._id}>
 								<img
-									src={comment.author?.profilePicture || "https://via.placeholder.com/40"}
+									src={comment.author.avatar? `${Env.SERVER_URL}/${comment.author.avatar}` : userPhoto}
 									alt="User avatar"
 									className="comment__avatar"
 								/>

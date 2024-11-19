@@ -92,8 +92,8 @@ router.post('/get-user-data', async (req, res) => {
             case 'email':
                 responseData.email = user.email;
                 break;
-            case 'profilepicture':
-                responseData.profilePicture = user.profilePicture;
+            case 'avatar':
+                responseData.avatar = user.avatar;
                 break;
             case 'bio':
                 responseData.bio = user.bio;

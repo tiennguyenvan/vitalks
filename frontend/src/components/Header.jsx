@@ -25,8 +25,6 @@ const Header = () => {
 
 	const location = useLocation().pathname.split('/');
 
-	console.log(location[1]);
-
 	return (
 		<>
 			<div className="navbar">
