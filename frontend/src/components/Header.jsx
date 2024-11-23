@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import userPhoto from '../assets/images/profile-user-photo-1.png';
-import { FaBars, FaHouse, FaCircleUser, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
+import { FaBars, FaCircleInfo, FaHouse, FaCircleUser, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
 import SiteLogo from './SiteLogo';
 import { useLocation }  from 'react-router-dom';
 
@@ -53,6 +53,10 @@ const Header = () => {
 								<a href="/" className={`navbar__link ${location[1] ? '' : 'navbar__link--active'}`}>
 									<span className="nav__icon"><FaHouse /></span>
 									<span className="nav__label">Home</span>
+								</a>
+								<a href="/about" className={`navbar__link ${location[1] === 'about' ? 'navbar__link--active' : ''}`}>
+									<span className="nav__icon"><FaCircleInfo /></span>
+									<span className="nav__label">About</span>
 								</a>
 								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className={`navbar__link ${location[1] === 'profile' ? 'navbar__link--active' : ''}`}>
 									<span className="nav__icon"><FaCircleUser /></span>

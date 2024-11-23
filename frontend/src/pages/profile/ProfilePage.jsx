@@ -293,7 +293,6 @@ const ProfilePage = () => {
 											}}>Save</button>
 										</div>
 									) : <>
-										{profileUserInfo.bio}
 										{isProfileOwner &&
 											<button 
 												className="btn form__button form__button--primary form__button--edit"
@@ -318,6 +317,7 @@ const ProfilePage = () => {
 											/>
 										</>
 									) : <>
+									{profileUserInfo.bio}
 										</>
 									}
 								</div>
