@@ -159,7 +159,10 @@ const ProfilePage = () => {
 						/>
 						{isProfileOwner &&
 							<>
-								<button className="btn-edit-cover" onClick={() => isProfileOwner && document.getElementById("coverImageUpload").click()}>
+								<button
+									className="btn form__button form__button--primary form__button--cover"
+									onClick={() => isProfileOwner && document.getElementById("coverImageUpload").click()}
+								>
 									<IoIosCamera /> Edit Cover Photo
 								</button>
 								<input
@@ -182,7 +185,10 @@ const ProfilePage = () => {
 									/>
 									{isProfileOwner &&
 										<>
-											<button onClick={() => isProfileOwner && document.getElementById("avatarImageUpload").click()}>
+											<button 
+												className="btn form__button form__button--primary form__button--profilePhoto"
+												onClick={() => isProfileOwner && document.getElementById("avatarImageUpload").click()}
+											>
 												<IoIosCamera />
 											</button>
 											<input
@@ -198,37 +204,48 @@ const ProfilePage = () => {
 
 								<div className="info">
 									<div className="info__main">
+										{editingField === "name" ? (
+											<>
+												<input
+													className="form__input form__input--name"
+													type="text"
+													value={editedValue}
+													onChange={(e) => setEditedValue(e.target.value)}
+												/>
+												<button 
+													className="btn form__button form__button--primary form__button--cancel"
+													onClick={()=> setEditingField(null)}
+												>Cancel</button>
 
-
-										<h2 className="info__name">
-											{editingField === "name" ? (
-												<>
-													<input
-														type="text"
-														value={editedValue}
-														onChange={(e) => setEditedValue(e.target.value)}
-													/>
-													<button onClick={()=> setEditingField(null)}>x</button>
-													<button onClick={()=>{
-														updateProfile("name", editedValue);
-                                                        setEditingField(null);
-                                                        setEditedValue(null);
-													}}>V</button>
-												</>
-											) :
-												<>
+												<button
+													className="btn form__button form__button--primary form__button--save"
+													onClick={()=>{
+													updateProfile("name", editedValue);
+													setEditingField(null);
+													setEditedValue(null);
+												}}>Save</button>
+											</>
+										) :
+											<>
+												<h2 className="info__name">
 													{profileUserInfo.name}
-													{isProfileOwner &&
-														<button onClick={() => isProfileOwner && handleEditClick("name")}>Edit</button>
-													}
-												</>
-											}
-										</h2>
+												</h2>
+												{isProfileOwner &&
+													<button 
+														className="btn form__button form__button--primary form__button--edit" 
+														onClick={() => isProfileOwner && handleEditClick("name")}
+													>
+														Edit
+													</button>
+												}
+											</>
+										}
+										
 
 										{isProfileOwner && (
 											<div className="info_buttons">
 												<button
-													className="btn form__button form__button--follow"
+													className="btn form__button form__button--primary form__button--follow"
 													onClick={handleFollowToggle}
 												>
 													{isFollowing ? "Unfollow" : "Follow"}
@@ -260,34 +277,50 @@ const ProfilePage = () => {
 							<aside className="sidebar">
 
 								<div className="sidebar__head">
-									<h3 className="sidebar__title">About</h3>
+									<h3 className="sidebar__title">Bio</h3>
 
-									<p>
-										{editingField === "bio" ? (
-											<>
-												<textarea
-													className="info__bio"
-													value={
-														editedValue
-													}
-													onChange={(e) => setEditedValue(e.target.value)}
-												/>
-												<button onClick={()=> setEditingField(null)}>x</button>
-													<button onClick={()=>{
-														updateProfile("bio", editedValue);
-                                                        setEditingField(null);
-                                                        setEditedValue(null);
-													}}>V</button>
-											</>
-										) : <>
-											{profileUserInfo.bio}
-											{isProfileOwner &&
-												<button onClick={() => isProfileOwner && handleEditClick("bio")}>Edit</button>
-											}
-										</>}
-									</p>
+									{editingField === "bio" ? (
+										<div>
+											<button 
+												className="btn form__button form__button--primary form__button--cancel"
+												onClick={()=> setEditingField(null)}>Cancel</button>
+											<button 
+												className="btn form__button form__button--primary form__button--save"
+												onClick={()=>{
+												updateProfile("bio", editedValue);
+												setEditingField(null);
+												setEditedValue(null);
+											}}>Save</button>
+										</div>
+									) : <>
+										{profileUserInfo.bio}
+										{isProfileOwner &&
+											<button 
+												className="btn form__button form__button--primary form__button--edit"
+												onClick={() => isProfileOwner && handleEditClick("bio")}
+											>
+												Edit
+											</button>
+										}
+									</>}
 								</div>
 
+								<div className="sidebar__body">
+									{editingField === "bio" ? (
+										<>
+											<textarea
+												className="feed__input-box feed__input--about"
+												placeholder="Add a bio"
+												value={
+													editedValue
+												}
+												onChange={(e) => setEditedValue(e.target.value)}
+											/>
+										</>
+									) : <>
+										</>
+									}
+								</div>
 							</aside>
 						</div>
 						<div className="row__feed col-md-8 col-sm-12">

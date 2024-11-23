@@ -155,7 +155,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 					)}
 
 					<button
-						className="feed__input-button form__button form__button--primary"
+						className="feed__input-button form__button form__button--primary form__button--submit"
 						onClick={handleSubmit}
 					>
 						{post ? "Update Post" : "Submit"}

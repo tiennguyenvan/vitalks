@@ -18,9 +18,16 @@
 		gap: 20px;
 		border-radius: 10px;
 		margin-top: -80px;
-		margin-left: 100px;
-		;
+		margin-left: 20px;
 	}
+
+	&__photo-container {
+		position: relative;
+	}
+}
+
+.page-profile .feed__input--about {
+	margin-top: 15px;
 }
 
 .page-profile .info {
@@ -51,6 +58,7 @@
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	overflow: hidden;
+	width: 350px;
 }
 
 .page-profile .item {
@@ -65,16 +73,68 @@
 	}
 }
 
-.form__button--follow {
-	background-color: $white;
-	color: $primary-btn;
-	padding: 8px 25px;
-
-	&:hover {
-		background-color: $primary-btn-hover;
-		color: #fff;
+.form__input {
+	&--name {
+		padding: 8px;
 	}
 }
+
+.form__button {
+	&--primary {
+		margin-left: 5px;
+		padding: 8px 25px;
+		background-color: $white;
+		color: $primary-btn;
+
+
+		&:hover {
+			background-color: $primary-btn;
+			color: #fff;
+		}
+	}
+
+	&--submit,
+	&--edit {
+		background-color: $primary-btn;
+		color: $white;
+		
+		&:hover {
+			background-color: $primary-btn-hover;
+		}
+	}
+
+	&--cancel {
+		background-color: $red;
+		color: $white;
+
+		&:hover {
+			background-color: $red-hover;
+		}
+	}
+
+	&--save {
+		background-color: $blue;
+		color: $white;
+
+		&:hover {
+			background-color: $blue-hover;
+		}
+	}
+
+	&--cover {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+	}
+
+	&--profilePhoto {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 5px 8px;
+	}
+}
+
 // added by Tim temporarily, please optimize this
 button.btn-edit-cover {
     position: absolute;
