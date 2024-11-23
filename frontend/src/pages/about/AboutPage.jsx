@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import userPhoto from '../../assets/images/profile-user-photo-1.png';
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import './About.scss';
@@ -135,6 +136,7 @@ const AboutPage = () => {
                     </section>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

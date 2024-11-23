@@ -85,7 +85,7 @@ const LoginForm = ({ title }) => {
                         />
                     </div>
 
-                    <button type="submit" className="form__button form__button--primary" disabled={isLoading}>
+                    <button type="submit" className="btn form__button form__button--primary form__button--edit" disabled={isLoading}>
                         {isLoading ? 'Loading...' : 'Get Validation Code'}
                     </button>
                 </>
@@ -104,7 +104,7 @@ const LoginForm = ({ title }) => {
                         />
                     </div>
 
-                    <button type="submit" className="form__button form__button--primary">
+                    <button type="submit" className="btn form__button form__button--primary form__button--edit">
                         Login
                     </button>
 

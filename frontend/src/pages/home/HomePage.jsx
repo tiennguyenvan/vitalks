@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import SideBarItem from './SideBarItem';
 import Feed from '../../components/Feed';
 import userPhoto from '../../assets/images/profile-user-photo-1.png';
@@ -36,6 +37,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     </> );
 }
