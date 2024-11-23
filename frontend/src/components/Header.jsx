@@ -50,17 +50,17 @@ const Header = () => {
 
 						<div className={`navbar__links ${isMenuOpen ? 'active' : ''}`}>
 							<div className="navbar__link__container">
-								<a href="/" className={`navbar__link ${location[1] ? '' : 'navbar__link--active'}`}>
+								{/* <a href="/" className={`navbar__link ${location[1] ? '' : 'navbar__link--active'}`}>
 									<span className="nav__icon"><FaHouse /></span>
 									<span className="nav__label">Home</span>
+								</a> */}
+								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className={`navbar__link ${location[1] === 'profile' ? 'navbar__link--active' : ''}`}>
+									<span className="nav__icon"><FaCircleUser /></span>
+									<span className="nav__label">Profile</span>
 								</a>
 								<a href="/about" className={`navbar__link ${location[1] === 'about' ? 'navbar__link--active' : ''}`}>
 									<span className="nav__icon"><FaCircleInfo /></span>
 									<span className="nav__label">About</span>
-								</a>
-								<a href={`/profile/${(currentUser && currentUser._id) ? currentUser._id: ''}`} className={`navbar__link ${location[1] === 'profile' ? 'navbar__link--active' : ''}`}>
-									<span className="nav__icon"><FaCircleUser /></span>
-									<span className="nav__label">Profile</span>
 								</a>
 								<div className="navbar__profile">
 									<div className="navbar__profile-info">
