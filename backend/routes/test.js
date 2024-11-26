@@ -135,7 +135,7 @@ router.post('/get-user-data', async (req, res) => {
  * - message (String): Confirmation message
  * - categories (Array): List of created demo categories
  * 
-curl -X POST http://localhost:5001/test/create-demo-categories \
+curl -X POST http://localhost:5000/test/create-demo-categories \
 -H "Content-Type: application/json"
  * 
  */

@@ -105,7 +105,7 @@ REACT_APP_SENDGRID_FROM_EMAIL=contact@sneeit.com
 2. You should see:
    ```
    Connected to MongoDB successfully!
-   Server is running on http://localhost:5001
+   Server is running on http://localhost:5000
    ```
 
 ## 6. Run the Frontend (React)
@@ -123,7 +123,7 @@ REACT_APP_SENDGRID_FROM_EMAIL=contact@sneeit.com
 ## 7. Test the Setup
 1. Open browser/Postman and visit:
    ```
-   http://localhost:5001/
+   http://localhost:5000/
    ```
 
 2. You should see:
@@ -134,7 +134,7 @@ REACT_APP_SENDGRID_FROM_EMAIL=contact@sneeit.com
 3. **Test User Creation:**
    - Send a **POST request** to:
      ```
-     POST http://localhost:5001/test-create-user
+     POST http://localhost:5000/test-create-user
      ```
    - **Body (JSON)**:
      ```json

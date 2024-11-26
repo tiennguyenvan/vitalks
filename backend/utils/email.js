@@ -21,7 +21,7 @@ async function sendValidationEmail(to, code) {
 
     try {
         await sgMail.send(msg);
-        console.log('Validation email sent successfully!');
+        console.log('Validation email sent successfully!', code);
     } catch (error) {
         console.error('Error sending validation email:', error);
         throw new Error('Failed to send email');

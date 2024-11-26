@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import userPhoto from '../../assets/images/profile-user-photo-1.png';
+// import userPhoto from '../../assets/images/profile-user-photo-1.png';
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import './About.scss';
 
@@ -67,7 +67,7 @@ const AboutPage = () => {
                         <div className='row'>
                             <div className="col-md-6">
                                 <div className='info__img-container'>
-                                    <img className="info__img" src="https://img.freepik.com/free-photo/mobile-notification-icons-man-woman-using-cell-phone_23-2147844554.jpg?t=st=1732345398~exp=1732348998~hmac=fdf31bba4289be62ca38b29a6cbd64d55bc1e49b30d11546a6fedb273e173834&w=2000" alt="Image 1" />
+                                    <img className="info__img" src="https://img.freepik.com/free-photo/mobile-notification-icons-man-woman-using-cell-phone_23-2147844554.jpg?t=st=1732345398~exp=1732348998~hmac=fdf31bba4289be62ca38b29a6cbd64d55bc1e49b30d11546a6fedb273e173834&w=2000" alt="Demo" />
                                 </div>
                             </div>
                             <div className="info__main col-md-6">

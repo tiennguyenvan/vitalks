@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import userPhoto from '../assets/images/profile-user-photo-1.png';
-import { FaBars, FaCircleInfo, FaHouse, FaCircleUser, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
+import { FaBars, FaCircleInfo, FaCircleUser, FaMagnifyingGlass, FaAngleDown } from "react-icons/fa6";
 import SiteLogo from './SiteLogo';
 import { useLocation }  from 'react-router-dom';
 
