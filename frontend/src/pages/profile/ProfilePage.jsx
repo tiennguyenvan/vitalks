@@ -20,6 +20,7 @@ const ProfilePage = () => {
 	const [editingField, setEditingField] = useState(null); // Track which field is being edited
 	const [editedValue, setEditedValue] = useState(""); // Store the edited value
 	const [isFetching, setIsFetching] = useState(false);
+	// console.log(editingField, profileUserInfo)
 
 	// Fetch the current user and profile data
 	useEffect(() => {
@@ -45,7 +46,7 @@ const ProfilePage = () => {
 
 				// Fetch profile user data
 				const profileResponse = await axios.post(`${Env.SERVER_URL}/users/get-user/${profileUserId}`, { email, code });
-				console.log(profileResponse);
+				// console.log(profileResponse);
 				setProfileUserInfo({
 					name: profileResponse.data.name || "Anonymous User",
 					avatar: profileResponse.data.avatar ? `${Env.SERVER_URL}/${profileResponse.data.avatar}` : defaultUserAvatar,
@@ -53,6 +54,7 @@ const ProfilePage = () => {
 					thoughtsCount: profileResponse.data.thoughtsCount || 0,
 					listenersCount: profileResponse.data.listenersCount || 0,
 					followingsCount: profileResponse.data.followingsCount || 0,
+					bio: profileResponse.data.bio || "",
 				});
 
 				// Check follow status
@@ -179,7 +181,7 @@ const ProfilePage = () => {
 							<div className="profile__info">
 								<div className="profile__photo-container">
 									<img
-										className="profile__photo"
+										className="profile__photo rounded"
 										src={profileUserInfo.avatar}
 										alt="Avatar"
 										style={{ height: 100, width: 100 }}
@@ -187,7 +189,7 @@ const ProfilePage = () => {
 									{isProfileOwner &&
 										<>
 											<button 
-												className="btn form__button form__button--primary form__button--profilePhoto"
+												className="rounded btn form__button form__button--primary form__button--profilePhoto"
 												onClick={() => isProfileOwner && document.getElementById("avatarImageUpload").click()}
 											>
 												<IoIosCamera />
@@ -325,7 +327,7 @@ const ProfilePage = () => {
 							</aside>
 						</div>
 						<div className="row__feed col-md-8 col-sm-12">
-							<Feed />
+							<Feed profileUserId={profileUserId}/>
 						</div>
 					</div>
 				</div>

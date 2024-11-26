@@ -15,7 +15,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 	const [selectedCategory, setSelectedCategory] = useState(post?.categoryId?._id || "");
 
 
-	if (post) { console.log({ post, image }) }
+	// if (post) { console.log({ post, image }) }
 	// Fetch categories on load
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -104,7 +104,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 
 	return (
 		<div className="feed__input">
-			{post === null && <img src={userPhoto} alt="User Avatar" className="feed__input-avatar" />}
+			{false && post === null && <img src={userPhoto} alt="User Avatar" className="feed__input-avatar" />}
 			<div className="feed__input-content">
 				<textarea
 					className="feed__input-box"
@@ -132,7 +132,7 @@ const PostForm = ({ refreshPosts, post = null, onSubmit }) => {
 
 						{imagePreview ?
 							<div className="feed__image-preview">
-								<img src={imagePreview} alt="Uploaded" className="feed__image-thumbnail" />
+								<img src={imagePreview} alt="Uploaded" className="feed__image-thumbnail" style={{maxWidth: "100%"}} />
 								<button onClick={removeImage} className="feed__image-remove">x</button>
 							</div>
 							:

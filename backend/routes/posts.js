@@ -67,14 +67,21 @@ router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
  */
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find().populate('author').populate('categoryId').sort({ createdAt: -1 });
+        const { profileUserId } = req.query; // Extract profileUserId from the query parameters
+        let postsQuery = Post.find().populate('author').populate('categoryId').sort({ createdAt: -1 });
+        
+        if (profileUserId) {
+            postsQuery = postsQuery.where('author').equals(profileUserId);
+        }
 
+        const posts = await postsQuery.exec(); // Execute the query
         res.status(200).json(posts);
     } catch (error) {
         console.error("Error fetching posts:", error);
         res.status(500).json({ message: 'Failed to retrieve posts', error: error.message });
     }
 });
+
 
 ////////////////////////////////////////////////////////////////////////
 // GET A SPECIFIC POST BY ID

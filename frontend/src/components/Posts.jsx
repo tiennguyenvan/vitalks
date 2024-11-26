@@ -7,7 +7,7 @@ import { fetchCurrentUser, getCurrentUserEmailCode, isUserLoggedIn, redirectToLo
 import axios from 'axios';
 import PostForm from './PostForm';
 
-const Posts = ({ posts, setPosts }) => {
+const Posts = ({ posts, setPosts, profileUserId }) => {
 	const [dropdownVisibleIndex, setDropdownVisibleIndex] = useState(null);
 	const [editingPostId, setEditingPostId] = useState(null);
 	const [currentUser, setCurrentUser] = useState(null);
@@ -15,7 +15,7 @@ const Posts = ({ posts, setPosts }) => {
 	const toggleDropdown = (index) => {
 		setDropdownVisibleIndex(prevIndex => (prevIndex === index ? null : index));
 	};
-
+	
 	// Close dropdown when clicking outside
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -51,7 +51,10 @@ const Posts = ({ posts, setPosts }) => {
 
 	const refreshPosts = async () => {
 		try {
-			const response = await axios.get(`${Env.SERVER_URL}/posts`);
+			
+			const queryParam = profileUserId ? `?profileUserId=${profileUserId}` : '';
+			const response = await axios.get(`${Env.SERVER_URL}/posts${queryParam}`);
+			console.log({profileUserId, queryParam});
 			setPosts(response.data);
 		} catch (error) {
 			console.error("Error refreshing posts:", error);
@@ -70,7 +73,7 @@ const Posts = ({ posts, setPosts }) => {
 
 		try {
 			await axios.delete(`${Env.SERVER_URL}/posts/${postId}`, {
-				data: { ...getCurrentUserEmailCode() }, // Pass email and code for authentication
+				data: { ...getCurrentUserEmailCode(), profileUserId }, // Pass email and code for authentication
 			});
 
 			// Update the posts state after deletion
