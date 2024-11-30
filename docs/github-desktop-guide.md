@@ -3,7 +3,7 @@
 ## 1. Cloning the Repository
 1. Open **GitHub Desktop**.
 2. Click **File > Clone Repository**.
-3. Select **VITALKS_PROJECT** from the repository list.
+3. Select **vitalks** from the repository list.
 4. Choose a local path where the project will be stored.
 5. Click **Clone**.
 
