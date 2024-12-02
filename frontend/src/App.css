@@ -61,6 +61,10 @@ p {
     margin-top: 0.5em;
 }
 
+.align-center {
+    text-align: center;
+}
+
 /* Main */
 .main {
 	margin: 20px 0;
@@ -217,6 +221,25 @@ p {
 
 .nav__icon {
     display: none;
+}
+
+/* Footer */
+footer {
+    margin-top: 55px;
+    background-color: #2D2E30;
+    color: #fff;
+    padding: 15px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #FFFF00;
+}
+footer a:hover {
+    text-decoration: underline;
 }
 
 /* Responsiveness */

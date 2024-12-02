@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+.page-profile .profile__cover-container {
+  margin-bottom: 25px;
+}
+.page-profile .profile__cover-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+.page-profile .profile__info {
+  display: flex;
+  align-items: center;
+  float: left;
+  gap: 20px;
+  border-radius: 10px;
+  margin-top: -80px;
+  margin-left: 100px;
+}
+
+.page-profile .info__main {
+  display: flex;
+  align-items: center;
+}
+.page-profile .info__name {
+  font-weight: bold;
+  color: #FFF;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  margin-right: 15px;
+}
+.page-profile .items {
+  background-color: #F6F6F6;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.page-profile .item {
+  font-size: 0.9em;
+  color: #333;
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+.page-profile .item:not(:first-child) {
+  border-left: 1px solid #ccc;
+}
+
+.form__button--follow {
+  background-color: #FFF;
+  color: #1E1E1E;
+  padding: 8px 25px;
+}
+.form__button--follow:hover {
+  background-color: #414141;
+  color: #fff;
+}/*# sourceMappingURL=ProfilePage.css.map */
