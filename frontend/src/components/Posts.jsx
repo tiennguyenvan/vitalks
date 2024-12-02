@@ -99,7 +99,7 @@ const Posts = ({ posts, setPosts, profileUserId }) => {
 								className="post__avatar"
 							/>
 							<div className="post__info">
-								<span className="post__username">{post.author?.name || "Private User"}</span>
+								<a href={'/profile/' +post.author?._id} className="post__username">{post.author?.name || "Private User"}</a>
 								<span className="post__time">{new Date(post.createdAt).toLocaleString()}</span>
 							</div>
 							{isCurrentUser &&

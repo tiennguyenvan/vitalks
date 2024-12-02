@@ -5,12 +5,13 @@ import axios from 'axios';
 import Env from '../utils/Env';
 
 const Feed = ({profileUserId}) => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 
     // Define refreshPosts to fetch posts from the backend
     const refreshPosts = async () => {
         try {
-
+			setIsLoading(true);
             //const response = await axios.get(`${Env.SERVER_URL}/posts`);
 			const queryParam = profileUserId ? `?profileUserId=${profileUserId}` : '';
 			const response = await axios.get(`${Env.SERVER_URL}/posts${queryParam}`);
@@ -23,8 +24,11 @@ const Feed = ({profileUserId}) => {
 
     // Fetch posts on component mount
     useEffect(() => {
+		if ((posts && posts.length > 0) || isLoading) {
+			return;
+		}
         refreshPosts();
-    }, [profileUserId]);
+    });
 
     return (
         <div className="feed">
@@ -32,7 +36,7 @@ const Feed = ({profileUserId}) => {
             <PostForm refreshPosts={refreshPosts} />
 
             {/* Posts */}
-            {posts.length > 0 && <Posts posts={posts} setPosts={setPosts} profileUserId={profileUserId} />}
+            {posts && posts.length > 0 && <Posts posts={posts} setPosts={setPosts} profileUserId={profileUserId} />}
         </div>
     );
 };
